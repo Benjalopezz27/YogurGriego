@@ -1,0 +1,22 @@
+{
+  "name": "yogurgriego",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource-variable/onest": "^5.2.10",
+    "@fontsource/open-sans": "^5.2.6",
+    "@tailwindcss/cli": "^4.1.13",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.13",
+    "astro": "^5.13.7",
+    "flowbite": "^3.1.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13"
+  }
+}

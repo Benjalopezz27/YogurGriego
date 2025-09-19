@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../global.css";
+import SectionContainer from "../components/SectionContainer.astro";
+import CardYogur from "../components/cardYogur.astro";
+import yogur1 from "../assets/yogur1.jpg";
+import yogur2 from "../assets/yogur2.jpg";
+import yogur3 from "../assets/yogur3.jpg";
+import Carousel from "../components/Carousel.astro";
+const cardYogurs = [
+  { title: "Casero", imageUrl: yogur1 },
+  { title: "Natural", imageUrl: yogur2 },
+  { title: "Cremoso", imageUrl: yogur3 },
+];
+---
+
+<Layout>
+  <main>
+    <SectionContainer class="py-20 pb-41">
+      <div class="px-15 md:px-6">
+        <p class="text-md md:text-xl font-bold flex py-2">
+          <span class="bg-red-200 px-2 rounded-2xl">por Josefina</span>
+        </p>
+
+        <h1 class="md:text-7xl lg:text-8xl text-5xl font-bold my-4 text-pretty">
+          Yogur Griego
+        </h1>
+        <p
+          class="text-md md:text-lg max-w-2xl text-gray-600 py-3 mb-6 text-pretty"
+        >
+          Yogur griego natural, cremoso y delicioso, perfecto para un estilo de
+          vida saludable por solo $4000.
+        </p>
+        <button
+          class="bg-red-400 px-14 py-3 rounded-full text-gray-100 hover:bg-red-500 transition-colors duration-300 font-bold"
+        >
+          Comprar
+        </button>
+      </div>
+
+      <Carousel class="px-0" />
+      <div class="hidden md:flex flex-wrap mt-10">
+        {
+          cardYogurs.map((card) => (
+            <CardYogur title={card.title} imageUrl={card.imageUrl.src} />
+          ))
+        }
+      </div>
+
+      <SectionContainer class="my-20" id="beneficios">
+        <h2 class="text-4xl font-bold text-center">
+          Beneficios del Yogur Griego
+        </h2>
+      </SectionContainer>
+    </SectionContainer>
+  </main>
+</Layout>
