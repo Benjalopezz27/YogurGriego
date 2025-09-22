@@ -3,7 +3,11 @@ import yogur1 from "../assets/yogur1.jpg";
 import yogur2 from "../assets/yogur2.jpg";
 import yogur3 from "../assets/yogur3.jpg";
 
-const yogurImages = [yogur1.src, yogur2.src, yogur3.src];
+const yogurImages = [
+  { title: "Casero", imageUrl: yogur1.src },
+  { title: "Natural", imageUrl: yogur2.src },
+  { title: "Cremoso", imageUrl: yogur3.src },
+];
 ---
 
 <div
@@ -14,13 +18,15 @@ const yogurImages = [yogur1.src, yogur2.src, yogur3.src];
   <!-- Carousel wrapper -->
   <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
     {
-      yogurImages.map((imageUrl, index) => (
-        <div class="duration-700 ease-in-out" data-carousel-item>
-          <img
-            src={imageUrl}
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt={`Slide ${index + 1}`}
-          />
+      yogurImages.map((yogur) => (
+        <div
+          class="absolute inset-0 transition-transform duration-700 ease-in-out transform translate-x-full"
+          data-carousel-item
+        >
+          <img src={yogur.imageUrl} class="block w-full h-full object-cover" />
+          <span class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 text-red-500 font-bold px-10 py-2 rounded shadow">
+            {yogur.title}
+          </span>
         </div>
       ))
     }
