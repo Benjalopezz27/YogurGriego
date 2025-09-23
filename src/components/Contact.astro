@@ -1,0 +1,221 @@
+---
+import Whatsapp from "../icons/whatsapp.astro";
+import Instagram from "../icons/instagram.astro";
+---
+
+<main class="w-full px-6 py-16">
+  <header class="text-center mb-12">
+    <h1 class="text-3xl md:text-4xl font-extrabold text-[#1a1c2d]">
+      ¿Cómo comprar nuestro Yogur Griego?
+    </h1>
+    <p class="mt-3 text-lg text-slate-600">
+      Pedilo en pocos pasos y recibilo fresco en tu casa. <span
+        class="font-medium"
+        >Envios por cantidad en <span class="bg-red-400/30"
+          >Yerba Buena.
+        </span></span
+      >
+    </p>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Left: Pasos y CTA -->
+    <section class="md:col-span-2 bg-white/80 rounded-lg shadow p-6">
+      <!-- Pasos para comprar -->
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-4">Pasos para comprar</h2>
+
+        <ol class="space-y-4">
+          <li class="flex items-start gap-4">
+            <div
+              class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
+            >
+              1
+            </div>
+            <div>
+              <p class="font-semibold">Elegí la cantidad</p>
+              <p class="text-sm text-slate-600">
+                Seleccioná cuantos potes de 400g querés comprar.
+              </p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-4">
+            <div
+              class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
+            >
+              2
+            </div>
+            <div>
+              <p class="font-semibold">Hacé tu pedido</p>
+              <p class="text-sm text-slate-600">
+                Por WhatsApp o completando el formulario abajo.
+              </p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-4">
+            <div
+              class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
+            >
+              3
+            </div>
+            <div>
+              <p class="font-semibold">Recibilo en tu casa</p>
+              <p class="text-sm text-slate-600">Entrega refrigerada.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 mt-6">
+        <!-- WhatsApp CTA -->
+        <a
+          href="https://wa.me/5491112345678?text=Hola%20quiero%20realizar%20un%20pedido%20de%20yogur%20griego"
+          target="_blank"
+          class="inline-flex items-center gap-3 bg-transparent border border-red-400 text-gray-700 hover:bg-red-400 hover:text-white px-5 py-3 rounded-lg shadow transition-colors duration-200"
+          aria-label="Enviar pedido por WhatsApp"
+        >
+          <Whatsapp stroke="red" stroke-width="1" />
+          Pedir por WhatsApp
+        </a>
+
+        <!-- Comprar ahora (ej: checkout) -->
+        <a
+          href="#formulario"
+          class="inline-flex items-center gap-3 bg-red-400 hover:bg-transparent hover:text-gray-700 hover:border hover:border-red-400 text-white px-5 py-3 rounded-lg shadow transition-colors duration-200"
+          aria-label="Ir al formulario de pedido"
+        >
+          Comprar ahora
+        </a>
+      </div>
+
+      <!-- Formulario (ejemplo) -->
+      <form
+        id="formulario"
+        action="#"
+        class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
+        <div>
+          <label
+            for="name"
+            class="block text-sm font-medium text-slate-700 mb-1">Nombre</label
+          >
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            class="block w-full rounded-lg border-gray-200 shadow-sm p-3"
+            placeholder="Ej: Ana Pérez"
+          />
+        </div>
+
+        <div>
+          <label
+            for="phone"
+            class="block text-sm font-medium text-slate-700 mb-1"
+            >Teléfono / WhatsApp</label
+          >
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            class="block w-full rounded-lg border-gray-200 shadow-sm p-3"
+            placeholder="+54 9 11 1234 5678"
+          />
+        </div>
+
+        <div class="md:col-span-2">
+          <label
+            for="order"
+            class="block text-sm font-medium text-slate-700 mb-1"
+            >Pedido / Mensaje</label
+          >
+          <textarea
+            id="order"
+            name="order"
+            rows="4"
+            class="block w-full rounded-lg border-gray-200 shadow-sm p-3"
+            placeholder="Ej: 2x400g a calle Avenida..."></textarea>
+        </div>
+
+        <div class="md:col-span-2 flex items-center gap-4">
+          <button
+            type="submit"
+            class="bg-red-400 hover:bg-red-500 text-white px-5 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Enviar pedido
+          </button>
+          <p class="text-sm text-slate-600">
+            Te responderemos por WhatsApp en menos de 24 horas.
+          </p>
+        </div>
+      </form>
+    </section>
+
+    <!-- Right: Datos de contacto + mapa -->
+    <aside class="bg-white/80 rounded-lg shadow p-6 flex flex-col gap-6">
+      <!-- Datos de contacto -->
+      <div>
+        <h3 class="text-lg font-semibold mb-3">Contacto directo</h3>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center gap-3">
+            <strong class="w-24 text-slate-700">Tel / WhatsApp</strong>
+            <a href="tel:+541112345678" class="text-green-600 hover:underline"
+              >+54 11 1234 5678</a
+            >
+          </li>
+          <li class="flex flex-col lg:flex-row items-start gap-3">
+            <strong class="w-24 text-slate-700">Email</strong>
+            <a
+              href="mailto:ventas@yogurcasero.com"
+              class="text-slate-600 hover:underline">ventas@yogurcasero.com</a
+            >
+          </li>
+          <li class="flex items-center gap-3">
+            <strong class="w-24 text-slate-700">Redes</strong>
+            <div class="flex gap-2">
+              <a
+                href="#"
+                class="p-2 rounded-full bg-pink-500 text-white hover:bg-transparent border border-pink-500 transition-colors duration-200"
+              >
+                <Instagram class="hover:stroke-pink-500" />
+              </a>
+              <a
+                href="#"
+                class="p-2 rounded-full bg-green-400 text-white hover:bg-transparent border border-green-400 transition-colors duration-200"
+              >
+                <Whatsapp class="hover:stroke-green-400" />
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Horarios -->
+      <div>
+        <h4 class="text-md font-semibold">Horarios de atención</h4>
+        <p class="text-sm text-slate-600">Lun - Vie: 9:00 - 15:00</p>
+        <p class="text-sm text-slate-600">Sáb: 9:00 - 18:00</p>
+      </div>
+
+      <!-- Mapa (Google Maps embed) -->
+      <div>
+        <h4 class="text-md font-semibold mb-2">Zona de entrega</h4>
+        <div class="w-full h-44 rounded overflow-hidden border">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56973.32393655521!2d-65.29535800000001!3d-26.8134537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9422433a2ee1bffb%3A0xc5d4083eee0d98b1!2sYerba%20Buena%2C%20Tucum%C3%A1n!5e0!3m2!1ses-419!2sar!4v1758581224444!5m2!1ses-419!2sar"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>

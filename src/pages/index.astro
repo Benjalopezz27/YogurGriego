@@ -1,5 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Header from "../components/header.astro";
+import FondoContacto from "../assets/FondoContacto.jpg";
+
 import "../global.css";
 import SectionContainer from "../components/SectionContainer.astro";
 import CardYogur from "../components/cardYogur.astro";
@@ -7,6 +10,8 @@ import yogur1 from "../assets/yogur1.jpg";
 import yogur2 from "../assets/yogur2.jpg";
 import yogur3 from "../assets/yogur3.jpg";
 import Carousel from "../components/Carousel.astro";
+import Contact from "../components/Contact.astro";
+import Fondo from "../assets/fondo.jpg";
 const cardYogurs = [
   { title: "Casero", imageUrl: yogur1 },
   { title: "Natural", imageUrl: yogur2 },
@@ -16,42 +21,53 @@ const cardYogurs = [
 
 <Layout>
   <main>
-    <SectionContainer class="py-20 pb-41">
-      <div class="px-15 md:px-6">
-        <p class="text-md md:text-xl font-bold flex py-2">
-          <span class="bg-red-200 px-2 rounded-2xl">por Josefina</span>
-        </p>
+    <div
+      class="bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${Fondo.src});`}
+    >
+      <Header />
 
-        <h1 class="md:text-7xl lg:text-8xl text-5xl font-bold my-4 text-pretty">
-          Yogur Griego
-        </h1>
-        <p
-          class="text-md md:text-lg max-w-2xl text-gray-600 py-3 mb-6 text-pretty"
-        >
-          Yogur griego natural, cremoso y delicioso, perfecto para un estilo de
-          vida saludable por solo <span class="bg-red-200/50">$4000.</span>
-        </p>
-        <button
-          class="bg-red-400 px-14 py-3 rounded-full text-gray-100 hover:bg-red-500 transition-colors duration-300 font-bold"
-        >
-          Comprar
-        </button>
-      </div>
+      <SectionContainer id="inicio" class="py-20 pb-31">
+        <div class="px-15 md:px-6">
+          <p class="text-md md:text-xl font-bold flex py-2">
+            <span class="bg-red-200 px-2 rounded-2xl">por Josefina</span>
+          </p>
 
-      <Carousel class="px-0" />
-      <div class="hidden md:flex flex-wrap mt-10">
-        {
-          cardYogurs.map((card) => (
-            <CardYogur title={card.title} imageUrl={card.imageUrl.src} />
-          ))
-        }
-      </div>
+          <h1
+            class="md:text-7xl lg:text-8xl text-5xl font-bold my-4 text-pretty"
+          >
+            Yogur Griego
+          </h1>
+          <p
+            class="text-md md:text-lg max-w-2xl text-gray-600 py-3 mb-6 text-pretty"
+          >
+            Yogur griego natural, cremoso y delicioso, perfecto para un estilo
+            de vida saludable por solo <span class="bg-red-200/50">$4000.</span>
+          </p>
+          <button
+            class="bg-red-400 px-14 py-3 rounded-full text-gray-100 hover:bg-red-500 transition-colors duration-300 font-bold"
+          >
+            Comprar
+          </button>
+        </div>
 
-      <SectionContainer class="my-20" id="beneficios">
-        <h2 class="text-4xl font-bold text-center">
-          Beneficios del Yogur Griego
-        </h2>
+        <Carousel class="px-0" />
+        <div class="hidden md:flex flex-wrap mt-10">
+          {
+            cardYogurs.map((card) => (
+              <CardYogur title={card.title} imageUrl={card.imageUrl.src} />
+            ))
+          }
+        </div>
       </SectionContainer>
-    </SectionContainer>
+    </div>
+    <div
+      class="bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${FondoContacto.src});`}
+    >
+      <SectionContainer id="contacto">
+        <Contact />
+      </SectionContainer>
+    </div>
   </main>
 </Layout>
