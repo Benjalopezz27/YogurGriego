@@ -12,11 +12,14 @@ import "../global.css";
 
 <header
   id="site-header"
-  class="flex justify-center items-center py-3 sm:py-5 md:py-8 w-full mx-auto px-6 sticky top-0 z-50 backdrop-blur-sm"
+  class="flex justify-center fixed items-center py-3 sm:py-5 md:py-8 w-full mx-auto px-6 top-0 z-50 backdrop-blur-sm"
 >
-  <div class="w-full max-w-[1200px] flex items-center justify-end">
+  <div class="w-full max-w-[1200px] flex items-center justify-between">
     <!-- logo / marca -->
-
+    <span
+      class="text-md font-semibold text-gray-800 bg-red-400/80 hover:bg-red-500/80 hover:text-white/80 transition transition-colors-300 px-2 rounded-full"
+      >Josefina</span
+    >
     <!-- botón toggle (visible en pantallas pequeñas) -->
     <button
       id="menuToggle"

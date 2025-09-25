@@ -1,0 +1,57 @@
+<form
+  id="formulario"
+  action="#"
+  class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4"
+>
+  <div>
+    <label for="name" class="block text-sm font-medium text-slate-700 mb-1"
+      >Nombre</label
+    >
+    <input
+      id="name"
+      name="name"
+      type="text"
+      required
+      class="block w-full rounded-lg border-gray-200 shadow-sm p-3"
+      placeholder="Ej: Ana Pérez"
+    />
+  </div>
+
+  <div>
+    <label for="phone" class="block text-sm font-medium text-slate-700 mb-1"
+      >Teléfono / WhatsApp</label
+    >
+    <input
+      id="phone"
+      name="phone"
+      type="tel"
+      required
+      class="block w-full rounded-lg border-gray-200 shadow-sm p-3"
+      placeholder="+54 9 11 1234 5678"
+    />
+  </div>
+
+  <div class="md:col-span-2">
+    <label for="order" class="block text-sm font-medium text-slate-700 mb-1"
+      >Pedido / Mensaje</label
+    >
+    <textarea
+      id="order"
+      name="order"
+      rows="4"
+      class="block w-full rounded-lg border-gray-200 shadow-sm p-3"
+      placeholder="Ej: 2x400g a calle Avenida..."></textarea>
+  </div>
+
+  <div class="md:col-span-2 flex items-center gap-4">
+    <button
+      type="submit"
+      class="bg-red-400 hover:bg-red-500 text-white px-5 py-3 rounded-lg font-semibold transition-colors"
+    >
+      Enviar pedido
+    </button>
+    <p class="text-sm text-slate-600">
+      Te responderemos por WhatsApp en menos de 24 horas.
+    </p>
+  </div>
+</form>
