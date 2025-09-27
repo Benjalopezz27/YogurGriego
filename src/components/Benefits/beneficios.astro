@@ -1,0 +1,183 @@
+---
+import Protein from "../../icons/protein.astro";
+import Spoon from "../../icons/spoon.astro";
+import Heart from "../../icons/heart.astro";
+import Glycemia from "../../icons/glycemia.astro";
+import Bone from "../../icons/bone.astro";
+import Bolt from "../../icons/bolt.astro";
+import Gut from "../../icons/gut.astro";
+import BeneficiosCard from "./BeneficiosCard.astro";
+import Scale from "../../icons/scale.astro";
+import BotonAnterior from "../../icons/BotonAnterior.astro";
+import BotonSiguiente from "../../icons/BotonSiguiente.astro";
+export const benefits = [
+  {
+    title: "Alto en proteínas",
+    icon: Protein,
+  },
+  {
+    title: "Energía sostenida",
+    icon: Bolt,
+  },
+  {
+    title: "Fuente de calcio",
+    icon: Bone,
+  },
+  {
+    title: "Mejora la digestión",
+    icon: Gut,
+  },
+  {
+    title: "Amigo del corazón",
+    icon: Heart,
+  },
+  {
+    title: "Versátil en la cocina",
+    icon: Spoon,
+  },
+  {
+    title: "Control del azúcar",
+    icon: Glycemia,
+  },
+  {
+    title: "Ayuda al control de peso",
+    icon: Scale,
+  },
+];
+---
+
+<section class="py-14 px-6" id="beneficios">
+  <div class="max-w-6xl mx-auto">
+    <header class="text-center mb-8">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-[#1a1c2d]">
+        Beneficios del Yogur Griego
+      </h2>
+      <p class="mt-2 text-slate-600 max-w-2xl mx-auto">
+        Descubrí por qué el yogur griego es una gran elección para tu día a día.
+        Salud, sabor y versatilidad en cada pote.
+      </p>
+    </header>
+    <div class="gap-6 grid-cols-2 lg:grid-cols-4 hidden md:grid">
+      {benefits.map((b) => <BeneficiosCard title={b.title} icon={b.icon} />)}
+    </div>
+    <div class="block md:hidden relative">
+      <!-- wrapper con overflow hidden -->
+      <div id="benefits-carousel" class="overflow-hidden relative">
+        <!-- slides track (flex) -->
+        <div
+          id="benefits-track"
+          class="flex transition-transform duration-500 ease-in-out"
+          style="transform: translateX(0%);"
+        >
+          {
+            benefits.map((b) => (
+              <div class="w-3xl px-2">
+                <BeneficiosCard title={b.title} icon={b.icon} />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <button
+        id="benefits-prev"
+        class="md:hidden flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white
+               focus:outline-none"
+        aria-label="Anterior"
+      >
+        <BotonAnterior />
+      </button>
+
+      <button
+        id="benefits-next"
+        class="flex md:hidden items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white
+               focus:outline-none"
+        aria-label="Siguiente"
+      >
+        <BotonSiguiente />
+      </button>
+    </div>
+  </div>
+</section>
+<script is:inline>
+  // Carousel logic: visible=2 (en md+). Funciona con el DOM generado arriba.
+  (function () {
+    // solo si existe el track (md+)
+    const track = document.getElementById("benefits-track");
+    if (!track) return;
+
+    const prev = document.getElementById("benefits-prev");
+    const next = document.getElementById("benefits-next");
+
+    const slides = Array.from(track.children); // cada slide es el wrapper con w-1/2 p-3
+    const total = slides.length;
+    const visible = 2; // siempre 2 visible en md+
+
+    let index = 0; // índice de la "página" (0..Math.ceil(total/visible)-1)
+
+    function pagesCount() {
+      return Math.max(1, Math.ceil(total / visible));
+    }
+
+    function updateButtons() {
+      const pages = pagesCount();
+      prev.disabled = index <= 0;
+      next.disabled = index >= pages - 1;
+      prev.classList.toggle("opacity-50", prev.disabled);
+      next.classList.toggle("opacity-50", next.disabled);
+    }
+
+    function update() {
+      // calculamos porcentaje de translateX
+      // cada "page" avanza visible slides -> desplazamiento = index * (100 / pagesCount())
+      const pages = pagesCount();
+      const shiftPercent = -(index * (100 / pages));
+      track.style.transform = `translateX(${shiftPercent}%)`;
+      updateButtons();
+    }
+
+    // recalcula el ancho de cada slide en caso de resize (no estrictamente necesario aquí porque usamos %)
+    function recalc() {
+      // no hacemos nada especial porque usamos % widths (w-1/2) en CSS
+      update();
+    }
+
+    prev.addEventListener("click", () => {
+      if (index > 0) {
+        index -= 1;
+        update();
+      }
+    });
+
+    next.addEventListener("click", () => {
+      const pages = pagesCount();
+      if (index < pages - 1) {
+        index += 1;
+        update();
+      }
+    });
+
+    // soporte teclado
+    prev.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        prev.click();
+      }
+    });
+    next.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        next.click();
+      }
+    });
+
+    // recalc on resize (debounced)
+    let t = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(t);
+      t = setTimeout(recalc, 120);
+    });
+
+    // init
+    update();
+  })();
+</script>

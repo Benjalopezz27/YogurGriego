@@ -1,0 +1,72 @@
+---
+import Whatsapp from "../../icons/whatsapp.astro";
+---
+
+<div class="mb-6">
+  <h2 class="text-xl font-semibold mb-4">Pasos para comprar</h2>
+
+  <ol class="space-y-4">
+    <li class="flex items-start gap-4">
+      <div
+        class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
+      >
+        1
+      </div>
+      <div>
+        <p class="font-semibold">Elegí la cantidad</p>
+        <p class="text-sm text-slate-600">
+          Seleccioná cuantos potes de 400g querés comprar.
+        </p>
+      </div>
+    </li>
+
+    <li class="flex items-start gap-4">
+      <div
+        class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
+      >
+        2
+      </div>
+      <div>
+        <p class="font-semibold">Hacé tu pedido</p>
+        <p class="text-sm text-slate-600">
+          Por WhatsApp o completando el formulario abajo.
+        </p>
+      </div>
+    </li>
+
+    <li class="flex items-start gap-4">
+      <div
+        class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
+      >
+        3
+      </div>
+      <div>
+        <p class="font-semibold">Recibilo en tu casa</p>
+        <p class="text-sm text-slate-600">Entrega refrigerada.</p>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<!-- CTA Buttons -->
+<div class="flex flex-col sm:flex-row items-center gap-4 mt-6">
+  <!-- WhatsApp CTA -->
+  <a
+    href="https://wa.me/5491112345678?text=Hola%20quiero%20realizar%20un%20pedido%20de%20yogur%20griego"
+    target="_blank"
+    class="inline-flex items-center gap-3 bg-transparent border border-red-400 text-gray-700 hover:bg-red-400 hover:text-white px-5 py-3 rounded-lg shadow transition-colors duration-200"
+    aria-label="Enviar pedido por WhatsApp"
+  >
+    <Whatsapp stroke="red" stroke-width="1" />
+    Pedir por WhatsApp
+  </a>
+
+  <!-- Comprar ahora (ej: checkout) -->
+  <a
+    href="#formulario"
+    class="inline-flex items-center gap-3 bg-red-400 hover:bg-transparent hover:text-gray-700 hover:border hover:border-red-400 text-white px-5 py-3 rounded-lg shadow transition-colors duration-200"
+    aria-label="Ir al formulario de pedido"
+  >
+    Comprar ahora
+  </a>
+</div>

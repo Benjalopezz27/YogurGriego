@@ -4,8 +4,10 @@ import FondoContacto from "../assets/FondoContacto.jpg";
 import "../global.css";
 import SectionContainer from "../components/SectionContainer.astro";
 import Carousel from "../components/Carousel.astro";
-import Contact from "../components/Contact.astro";
-import Header from "../components/header.astro";
+import Contact from "../components/Contact/Contact.astro";
+import Header from "../components/Header/header.astro";
+import Beneficios from "../components/Benefits/beneficios.astro";
+import FondoBeneficios from "../assets/FondoBeneficios.jpg";
 ---
 
 <Layout>
@@ -20,6 +22,14 @@ import Header from "../components/header.astro";
     >
       <SectionContainer id="contacto" class="pt-10">
         <Contact />
+      </SectionContainer>
+    </div>
+    <div
+      class="bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${FondoBeneficios.src});`}
+    >
+      <SectionContainer>
+        <Beneficios />
       </SectionContainer>
     </div>
   </main>

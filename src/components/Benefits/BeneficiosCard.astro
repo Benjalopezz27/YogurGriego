@@ -1,0 +1,23 @@
+---
+// src/components/BenefitCard.astro
+// Props: title (string), desc (string), icon (Astro component).
+const { title, icon: Icon } = Astro.props;
+---
+
+<article
+  class="h-full flex w-[100%] m-auto flex-col items-center text-center gap-2 sm:gap-6 p-3 md:p-6 rounded-3xl bg-white/60 shadow-sm transition-all duration-300 ease-in-out
+         hover:-translate-y-1 hover:shadow-md
+                border border-white/30"
+>
+  <div
+    class="flex items-center justify-center w-14 h-14 rounded-lg bg-transparent"
+  >
+    {(<Icon class="w-6 h-6 md:w-7 md:h-7 lg:w-9 lg:h-9  text-red-700" />)}
+  </div>
+
+  <h3
+    class="text-sm md:text-base lg:text-lg font-semibold text-slate-800 leading-tight"
+  >
+    {title}
+  </h3>
+</article>
