@@ -1,0 +1,77 @@
+---
+import RecipesCard from "./RecipesCard.astro";
+import receta1 from "../../assets/receta1.jpg";
+import receta2 from "../../assets/receta2.jpg";
+import receta3 from "../../assets/receta3.jpg";
+import receta4 from "../../assets/receta4.jpg";
+import receta5 from "../../assets/receta5.jpg";
+import receta6 from "../../assets/receta6.jpg";
+const recetas = [
+  {
+    title: "Desayuno Energético",
+    description:
+      "Comienza tu día con un tazón de yogur griego, frutas frescas y granola casera.",
+    imageUrl: receta1.src,
+    link: "#",
+  },
+  {
+    title: "Smoothie Refrescante",
+    description:
+      "Mezcla yogur griego con espinacas, plátano y un toque de miel para un smoothie nutritivo.",
+    imageUrl: receta2.src,
+    link: "#",
+  },
+  {
+    title: "Aderezo Cremoso",
+    description:
+      "Prepara un aderezo saludable mezclando yogur griego con hierbas frescas y limón.",
+    imageUrl: receta3.src,
+    link: "#",
+  },
+  {
+    title: "Helado de Yogur Griego",
+    description:
+      "Disfruta de un postre ligero y saludable haciendo helado casero con yogur griego y frutas.",
+    imageUrl: receta4.src,
+    link: "#",
+  },
+  {
+    title: "Pancakes con Yogur Griego",
+    description:
+      "Incorpora yogur griego en la masa de tus pancakes para un desayuno esponjoso y rico en proteínas.",
+    imageUrl: receta5.src,
+    link: "#",
+  },
+  {
+    title: "Cheese Cake Saludable",
+    description:
+      "Prepara un cheese cake ligero usando yogur griego en lugar de queso crema.",
+    imageUrl: receta6.src,
+    link: "#",
+  },
+];
+---
+
+<section class="py-14 px-6" id="recetas">
+  <header class="text-center mb-8">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-[#1a1c2d]">
+      Diferentes recetas con yogur griego
+    </h2>
+    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">
+      Explora todo tipo de recetas que incorporan yogur griego, desde desayunos
+      energéticos hasta postres indulgentes.
+    </p>
+  </header>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      recetas.map((receta) => (
+        <RecipesCard
+          title={receta.title}
+          description={receta.description}
+          imageUrl={receta.imageUrl}
+          link={receta.link}
+        />
+      ))
+    }
+  </div>
+</section>

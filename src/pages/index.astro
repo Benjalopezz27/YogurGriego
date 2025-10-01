@@ -7,7 +7,9 @@ import Carousel from "../components/Carousel.astro";
 import Contact from "../components/Contact/Contact.astro";
 import Header from "../components/Header/header.astro";
 import Beneficios from "../components/Benefits/beneficios.astro";
+import Recipes from "../components/Recipes/Recipes.astro";
 import FondoBeneficios from "../assets/FondoBeneficio.jpg";
+import FondoRecetas from "../assets/FondoRecetas.jpg";
 ---
 
 <Layout>
@@ -16,20 +18,29 @@ import FondoBeneficios from "../assets/FondoBeneficio.jpg";
       <Header />
       <Carousel class="w-full" />
     </section>
-    <div
-      class="bg-cover bg-center bg-no-repeat"
-      style={`background-image: url(${FondoContacto.src});`}
-    >
-      <SectionContainer id="contacto" class="pt-10">
-        <Contact />
-      </SectionContainer>
-    </div>
+
     <div
       class="bg-cover bg-center bg-no-repeat"
       style={`background-image: url(${FondoBeneficios.src});`}
     >
       <SectionContainer>
         <Beneficios />
+      </SectionContainer>
+    </div>
+    <div
+      class="bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${FondoRecetas.src});`}
+    >
+      <SectionContainer>
+        <Recipes />
+      </SectionContainer>
+    </div>
+    <div
+      class="bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${FondoContacto.src});`}
+    >
+      <SectionContainer id="contacto" class="pt-10">
+        <Contact />
       </SectionContainer>
     </div>
   </main>

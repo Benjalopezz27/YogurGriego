@@ -1,174 +1,179 @@
 ---
-import fondo from "../assets/fondo.jpg"
-import fondo2 from "../assets/fondo2.jpg"
+import fondo from "../assets/fondo.jpg";
+import fondo2 from "../assets/fondo2.jpg";
 
-import fondo3 from "../assets/fondo3.jpg"
+import fondo3 from "../assets/fondo3.jpg";
 const slidesProp = Astro.props.slides ?? null;
-const id = `hero-${Math.random().toString(36).slice(2,9)}`;
+const id = `hero-${Math.random().toString(36).slice(2, 9)}`;
 const defaultSlides = [
   {
     src: fondo.src,
     title: "Yogur Griego",
-    subtitle: "Hecho en casa, cremoso, natural y alto en proteínas. ¡Probalo hoy por solo $4000!",
+    subtitle:
+      "Hecho en casa, cremoso, natural y alto en proteínas. ¡Probalo hoy por solo $4000!",
     ctaText: "Comprar ahora",
-    ctaHref: "#contacto"
+    ctaHref: "#contacto",
   },
   {
     src: fondo2.src,
     title: "Variedades & Sabores",
-  subtitle: "¡Probaló con miel, frutas de estación, granola o frutos secos!",
+    subtitle: "¡Probaló con miel, frutas de estación, granola o frutos secos!",
     ctaText: "Ver Recetas",
-    ctaHref: "#recetas"
+    ctaHref: "#recetas",
   },
   {
     src: fondo3.src,
     title: "Todos los beneficios",
     subtitle: "Fortalece los huesos. Bajo en calorias y Alto en proteínas.",
     ctaText: "Beneficios",
-    ctaHref: "#beneficios"
-  }
-]
+    ctaHref: "#beneficios",
+  },
+];
 const slides = slidesProp ?? defaultSlides;
 ---
-<div
-id={id}
-data-carousel-id={id}
-class="relative w-full overflow-hidden"
-aria-roledescription="carousel"
->
-<!-- Slides wrapper -->
-<div
-class="flex transition-transform duration-700 ease-in-out"
-data-slides-wrapper
-style={`width: ${slides.length * 100}%; transform: translateX(0%);`}
->
-    {slides.map((s: any, i: any) => (
-      <div
-        class="relative w-full flex-shrink-0"
-        style={`width: ${100 / slides.length}%`}
-        role="group"
-        aria-roledescription="slide"
-        aria-label={`Slide ${i + 1} of ${slides.length}`}
-      >
-        <!-- imagen -->
-        <img src={s.src} alt={s.title} class="w-full h-[60vh] md:h-[80vh] object-cover block" loading="lazy" />
 
-        <!-- overlay oscuro para legibilidad -->
-        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30 pointer-events-none"></div>
+<div
+  id={id}
+  data-carousel-id={id}
+  class="relative w-full overflow-hidden"
+  aria-roledescription="carousel"
+>
+  <div
+    class="flex transition-transform duration-700 ease-in-out"
+    data-slides-wrapper
+    style={`width: ${slides.length * 100}%; transform: translateX(0%);`}
+  >
+    {
+      slides.map((s: any, i: any) => (
+        <div
+          class="relative w-full flex-shrink-0"
+          style={`width: ${100 / slides.length}%`}
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`Slide ${i + 1} of ${slides.length}`}
+        >
+          <img
+            src={s.src}
+            alt={s.title}
+            class="w-full h-[60vh] md:h-[80vh] object-cover block"
+            loading="lazy"
+          />
 
-        <!-- contenido centrado (izquierda en desktop) -->
-        <div class="absolute inset-0 flex items-center">
-          <div class="max-w-2xl px-6 md:px-12 lg:px-16 text-center md:text-left mx-auto md:mx-0">
-            <h2 class="text-4xl md:text-6xl lg:text-8xl font-extrabold text-gray-700 drop-shadow-md">
-              {s.title}
-            </h2>
-            <p class="mt-4 text-sm md:text-lg text-gray-700/80 max-w-xl">
-              {s.subtitle}
-            </p>
-            <div class="mt-6">
-              <a
-                href={s.ctaHref}
-                class="inline-block bg-red-400 hover:bg-red-500 text-white px-6 py-3 rounded-full font-semibold shadow transition-colors duration-200"
-              >
-                {s.ctaText}
-              </a>
+          <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30 pointer-events-none" />
+
+          <div class="absolute inset-0 flex items-center">
+            <div class="max-w-2xl px-6 md:px-12 lg:px-16 text-center md:text-left mx-auto md:mx-0">
+              <h2 class="text-4xl md:text-6xl lg:text-8xl font-extrabold text-gray-700 drop-shadow-md">
+                {s.title}
+              </h2>
+              <p class="mt-4 text-sm md:text-lg text-gray-700/80 max-w-xl">
+                {s.subtitle}
+              </p>
+              <div class="mt-6">
+                <a
+                  href={s.ctaHref}
+                  class="inline-block bg-red-400 hover:bg-red-500 text-white px-6 py-3 rounded-full font-semibold shadow transition-colors duration-200"
+                >
+                  {s.ctaText}
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    ))}
+      ))
+    }
   </div>
-
-  
-
-    <!-- Indicators (dots) -->
-    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-      {
-        slides.map((_: any, i: number) => (
-          <button
-            type="button"
-            class="w-3 h-3 rounded-full bg-white/60 hover:bg-white"
-            data-dot
-            data-index={i}
-            aria-label={`Ir a la slide ${i + 1}`}
-          />
-        ))
-      }
-    </div>
-  </button>
+</div>
 
 <script is:inline>
-window.addEventListener('DOMContentLoaded', () => {
-  // Buscar el primer slides wrapper en la página
-  const wrapper = document.querySelector('[data-slides-wrapper]');
-  if (!wrapper) return;
+  window.addEventListener("DOMContentLoaded", () => {
+    // Buscar el primer slides wrapper en la página
+    const wrapper = document.querySelector("[data-slides-wrapper]");
+    if (!wrapper) return;
 
-  // el root (contenedor) será el ancestro directo que contiene al wrapper
-  const root = wrapper.closest('[id]') || wrapper.parentElement;
-  const total = wrapper.children.length;
-  if (!total) return;
+    // el root (contenedor) será el ancestro directo que contiene al wrapper
+    const root = wrapper.closest("[id]") || wrapper.parentElement;
+    const total = wrapper.children.length;
+    if (!total) return;
 
-  let current = 0;
+    let current = 0;
 
-  // prefers-reduced-motion
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // prefers-reduced-motion
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // transition
-  const durationMs = prefersReduced ? 0 : 700;
-  const easing = 'cubic-bezier(0.4, 0, 0.2, 1)';
-  wrapper.style.transition = durationMs > 0 ? `transform ${durationMs}ms ${easing}` : 'none';
+    // transition
+    const durationMs = prefersReduced ? 0 : 700;
+    const easing = "cubic-bezier(0.4, 0, 0.2, 1)";
+    wrapper.style.transition =
+      durationMs > 0 ? `transform ${durationMs}ms ${easing}` : "none";
 
-  // autoplay
-  const intervalMs = 3000;
-  let timer = null;
-  let isPaused = false;
+    // autoplay
+    const intervalMs = 3000;
+    let timer = null;
+    let isPaused = false;
 
-  function update() {
-    const pct = -(100 / total) * current;
-    wrapper.style.transform = `translateX(${pct}%)`;
-  }
-
-  function goTo(index) {
-    current = ((index % total) + total) % total; // normaliza índice
-    update();
-  }
-
-  function next() { goTo(current + 1); }
-  function start() {
-    if (prefersReduced) return;
-    stop();
-    timer = setInterval(() => { if (!isPaused) next(); }, intervalMs);
-  }
-  function stop() { if (timer) { clearInterval(timer); timer = null; } }
-
-  // pause on hover/focus (si no reduced-motion)
-  if (!prefersReduced) {
-    root.addEventListener('mouseenter', () => { isPaused = true; });
-    root.addEventListener('mouseleave', () => { isPaused = false; });
-    root.addEventListener('focusin', () => { isPaused = true; });
-    root.addEventListener('focusout', () => { isPaused = false; });
-  }
-
-  // pausa al cambiar de pestaña (opcional pero útil)
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop();
-    else start();
-  });
-
-  // inicializar
-  update();
-  start();
-
-  // cleanup si el elemento se elimina del DOM
-  const obs = new MutationObserver(() => {
-    if (!document.body.contains(wrapper)) {
-      stop();
-      obs.disconnect();
+    function update() {
+      const pct = -(100 / total) * current;
+      wrapper.style.transform = `translateX(${pct}%)`;
     }
+
+    function goTo(index) {
+      current = ((index % total) + total) % total; // normaliza índice
+      update();
+    }
+
+    function next() {
+      goTo(current + 1);
+    }
+    function start() {
+      if (prefersReduced) return;
+      stop();
+      timer = setInterval(() => {
+        if (!isPaused) next();
+      }, intervalMs);
+    }
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    // pause on hover/focus (si no reduced-motion)
+    if (!prefersReduced) {
+      root.addEventListener("mouseenter", () => {
+        isPaused = true;
+      });
+      root.addEventListener("mouseleave", () => {
+        isPaused = false;
+      });
+      root.addEventListener("focusin", () => {
+        isPaused = true;
+      });
+      root.addEventListener("focusout", () => {
+        isPaused = false;
+      });
+    }
+
+    // pausa al cambiar de pestaña (opcional pero útil)
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    // inicializar
+    update();
+    start();
+
+    // cleanup si el elemento se elimina del DOM
+    const obs = new MutationObserver(() => {
+      if (!document.body.contains(wrapper)) {
+        stop();
+        obs.disconnect();
+      }
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
   });
-  obs.observe(document.body, { childList: true, subtree: true });
-});
 </script>
-
-
-</div>

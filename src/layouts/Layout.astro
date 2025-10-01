@@ -1,5 +1,6 @@
 ---
 import "@fontsource-variable/onest";
+import ScrollToTop from "../components/ScrollToTop.astro";
 ---
 
 <!doctype html>
@@ -13,6 +14,7 @@ import "@fontsource-variable/onest";
   </head>
   <body>
     <slot />
+    <ScrollToTop />
     <script
       is:inline
       src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
