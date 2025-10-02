@@ -1,6 +1,7 @@
 ---
 import "@fontsource-variable/onest";
 import ScrollToTop from "../components/ScrollToTop.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -8,12 +9,21 @@ import ScrollToTop from "../components/ScrollToTop.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta
+      name="description"
+      content="Descubre los beneficios del yogur griego natural, recetas fáciles y saludables, y por qué es el aliado perfecto para tu bienestar."
+    />
+    <meta
+      name="keywords"
+      content="yogur griego, beneficios, recetas saludables, probióticos, alimentación natural, comprar yogur griego, dieta equilibrada"
+    />
+    <link rel="icon" type="image/svg+xml" href="../assets/logo.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Yogur Griego</title>
   </head>
   <body>
     <slot />
+    <Footer />
     <ScrollToTop />
     <script
       is:inline

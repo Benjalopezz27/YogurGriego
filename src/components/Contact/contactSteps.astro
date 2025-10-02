@@ -2,10 +2,12 @@
 import Whatsapp from "../../icons/whatsapp.astro";
 ---
 
-<div class="mb-6">
-  <h2 class="text-xl font-semibold mb-4">Pasos para comprar</h2>
+<section class="mb-16">
+  <h2 class="text-2xl font-bold mb-4 text-gray-800">
+    Cómo comprar tu yogur griego
+  </h2>
 
-  <ol class="space-y-4">
+  <ol class="space-y-6 mt-10">
     <li class="flex items-start gap-4">
       <div
         class="flex-none w-10 h-10 rounded-full bg-red-400 text-white flex items-center justify-center font-bold"
@@ -15,7 +17,7 @@ import Whatsapp from "../../icons/whatsapp.astro";
       <div>
         <p class="font-semibold">Elegí la cantidad</p>
         <p class="text-sm text-slate-600">
-          Seleccioná cuantos potes de 400g querés comprar.
+          Seleccioná cuántos potes de 400g querés comprar.
         </p>
       </div>
     </li>
@@ -29,7 +31,8 @@ import Whatsapp from "../../icons/whatsapp.astro";
       <div>
         <p class="font-semibold">Hacé tu pedido</p>
         <p class="text-sm text-slate-600">
-          Por WhatsApp o completando el formulario abajo.
+          Mandanos un mensaje por WhatsApp indicando tu pedido. ¡Te respondemos
+          al instante!
         </p>
       </div>
     </li>
@@ -42,31 +45,34 @@ import Whatsapp from "../../icons/whatsapp.astro";
       </div>
       <div>
         <p class="font-semibold">Recibilo en tu casa</p>
-        <p class="text-sm text-slate-600">Entrega refrigerada.</p>
+        <p class="text-sm text-slate-600">
+          Entregamos con transporte refrigerado para asegurar la frescura.
+          También podés coordinar retiro.
+        </p>
       </div>
     </li>
   </ol>
-</div>
 
-<!-- CTA Buttons -->
-<div class="flex flex-col sm:flex-row items-center gap-4 mt-6">
-  <!-- WhatsApp CTA -->
-  <a
-    href="https://wa.me/5491112345678?text=Hola%20quiero%20realizar%20un%20pedido%20de%20yogur%20griego"
-    target="_blank"
-    class="inline-flex items-center gap-3 bg-transparent border border-red-400 text-gray-700 hover:bg-red-400 hover:text-white px-5 py-3 rounded-lg shadow transition-colors duration-200"
-    aria-label="Enviar pedido por WhatsApp"
-  >
-    <Whatsapp stroke="red" stroke-width="1" />
-    Pedir por WhatsApp
-  </a>
+  <div class="mt-10 bg-red-50 p-4 rounded-lg border border-red-100">
+    <p class="text-sm text-gray-700">
+      <strong>Métodos de pago:</strong> efectivo al recibir, transferencia bancaria
+      o Mercado Pago.
+    </p>
+    <p class="text-sm text-gray-600 mt-2">
+      Nuestro yogur es <span class="font-semibold">100% artesanal</span>, sin
+      conservantes y con ingredientes naturales.
+    </p>
+  </div>
 
-  <!-- Comprar ahora (ej: checkout) -->
-  <a
-    href="#formulario"
-    class="inline-flex items-center gap-3 bg-red-400 hover:bg-transparent hover:text-gray-700 hover:border hover:border-red-400 text-white px-5 py-3 rounded-lg shadow transition-colors duration-200"
-    aria-label="Ir al formulario de pedido"
-  >
-    Comprar ahora
-  </a>
-</div>
+  <div class="flex flex-col sm:flex-row items-center gap-4 mt-10">
+    <a
+      href="https://wa.me/5491112345678?text=Hola%20quiero%20realizar%20un%20pedido%20de%20yogur%20griego"
+      target="_blank"
+      class="inline-flex items-center gap-3 bg-transparent border border-red-400 text-gray-700 hover:bg-red-100 hover:text-red-700 px-5 py-3 rounded-lg shadow transition-colors duration-200"
+      aria-label="Enviar pedido por WhatsApp"
+    >
+      <Whatsapp stroke="red" stroke-width="1" />
+      Pedir por WhatsApp
+    </a>
+  </div>
+</section>
