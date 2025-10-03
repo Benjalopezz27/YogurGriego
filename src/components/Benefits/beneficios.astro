@@ -8,6 +8,8 @@ import Bolt from "../../icons/bolt.astro";
 import Gut from "../../icons/gut.astro";
 import BeneficiosCard from "./BeneficiosCard.astro";
 import Scale from "../../icons/scale.astro";
+import ModalBeneficios from "./modalBeneficios.astro";
+
 import BotonAnterior from "../../icons/BotonAnterior.astro";
 import BotonSiguiente from "../../icons/BotonSiguiente.astro";
 export const benefits = [
@@ -24,7 +26,7 @@ export const benefits = [
       "Proporciona energía duradera gracias a su combinación de proteínas y carbohidratos, ideal para mantenerte activo durante el día.",
   },
   {
-    title: "Fuente de calcio",
+    title: "Salud ósea",
     icon: Bone,
     description:
       "El yogur griego es rico en calcio, fundamental para la salud ósea y dental.",
@@ -73,17 +75,22 @@ export const benefits = [
         Salud, sabor y versatilidad en cada pote.
       </p>
     </header>
+
+    <!-- Desktop grid (visible md+) -->
     <div class="gap-6 grid-cols-2 lg:grid-cols-4 hidden md:grid">
       {
-        benefits.map((b) => (
+        benefits.map((b, i) => (
           <BeneficiosCard
             title={b.title}
             icon={b.icon}
             description={b.description}
+            modalId={`benefit-modal-${i}`}
           />
         ))
       }
     </div>
+
+    <!-- Mobile carousel (visible <md) -->
     <div class="block md:hidden relative">
       <div id="benefits-carousel" class="overflow-hidden relative">
         <div
@@ -92,34 +99,49 @@ export const benefits = [
           style="transform: translateX(0%);"
         >
           {
-            benefits.map((b) => (
+            benefits.map((b, i) => (
               <div class="w-3xl px-2">
-                <BeneficiosCard title={b.title} icon={b.icon} />
+                <BeneficiosCard
+                  title={b.title}
+                  icon={b.icon}
+                  description={b.description}
+                  modalId={`benefit-modal-${i}`}
+                />
               </div>
             ))
           }
         </div>
       </div>
+      <!-- botones prev/next -->
       <button
         id="benefits-prev"
-        class="md:hidden flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white
-               focus:outline-none"
+        class="md:hidden flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white focus:outline-none"
         aria-label="Anterior"
       >
         <BotonAnterior />
       </button>
-
       <button
         id="benefits-next"
-        class="flex md:hidden items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white
-               focus:outline-none"
+        class="flex md:hidden items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white focus:outline-none"
         aria-label="Siguiente"
       >
         <BotonSiguiente />
       </button>
     </div>
+
+    <!-- IMPORTANT: renderizamos los modales FUERA del contenedor responsive, siempre en el DOM -->
+    {
+      benefits.map((b, i) => (
+        <ModalBeneficios id={`benefit-modal-${i}`} title={b.title}>
+          <div class="space-y-3">
+            <p class="text-sm text-slate-700">{b.description}</p>
+          </div>
+        </ModalBeneficios>
+      ))
+    }
   </div>
 </section>
+
 <script is:inline>
   (function () {
     const track = document.getElementById("benefits-track");
