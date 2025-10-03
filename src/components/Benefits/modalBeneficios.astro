@@ -1,0 +1,171 @@
+---
+import Cerrar from "../../icons/cerrar.astro";
+const { id, title } = Astro.props;
+---
+
+<div id={id} data-modal class="hidden fixed inset-0 z-50" aria-hidden="true">
+  <div class="fixed inset-0 backdrop-blur-lg" data-modal-overlay></div>
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <!-- dialog -->
+    <div
+      class="relative max-w-lg mx-auto my-16 bg-white rounded-xl shadow-xl p-6 ring-1 ring-black/5"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`${id}-title`}
+      tabindex="-1"
+      data-modal-dialog
+    >
+      <div class="flex items-start justify-between gap-4">
+        <h3 id={`${id}-title`} class="text-lg font-semibold text-slate-900">
+          {title}
+        </h3>
+        <button
+          type="button"
+          class="text-slate-500 hover:text-slate-700"
+          data-modal-close
+          aria-label="Cerrar"
+        >
+          <Cerrar class="w-5 h-5" />
+        </button>
+      </div>
+
+      <div class="mt-4 text-sm text-slate-700">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  if (typeof window === "undefined") {
+    // no ejecutar en server
+  } else {
+    // inicializar una sola vez
+    if (!window.__simple_modal_inited) {
+      window.__simple_modal_inited = true;
+
+      const body = document.body;
+      let lastActivator = null;
+
+      function openModal(root) {
+        if (!root) return;
+        const dialog = root.querySelector("[data-modal-dialog]");
+        // Mostrar modal
+        root.classList.remove("hidden");
+        root.setAttribute("aria-hidden", "false");
+
+        // --- lock scroll without layout shift ---
+        const scrollY = window.scrollY || window.pageYOffset;
+        // guardar para restaurar luego
+        root.dataset._scrollY = String(scrollY);
+        // fijar body en la posición actual (evita que la página "salte" por el scrollbar)
+        document.documentElement.style.scrollBehavior = "auto"; // evitar smooth scroll al restaurar
+        document.body.style.position = "fixed";
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        // opcional: setear width para evitar small shift en algunos navegadores
+        document.body.style.width = "100%";
+        // --- end lock ---
+
+        // foco sin provocar scroll (fallback si no es soportado)
+        try {
+          dialog.focus({ preventScroll: true });
+        } catch (err) {
+          dialog.focus();
+        }
+
+        // listeners
+        function onKey(e) {
+          if (e.key === "Escape") closeModal(root);
+        }
+        function onOverlay(e) {
+          if (e.target === root.querySelector("[data-modal-overlay]"))
+            closeModal(root);
+        }
+        root.__onKey = onKey;
+        root.__onOverlay = onOverlay;
+        document.addEventListener("keydown", onKey);
+        root
+          .querySelector("[data-modal-overlay]")
+          .addEventListener("click", onOverlay);
+      }
+
+      function closeModal(root) {
+        if (!root) return;
+        // ocultar modal
+        root.classList.add("hidden");
+        root.setAttribute("aria-hidden", "true");
+
+        // --- unlock scroll and restore scroll position ---
+        const prev = root.dataset._scrollY
+          ? parseInt(root.dataset._scrollY, 10)
+          : 0;
+
+        // limpiar estilos que fijaron body
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        // restaurar scrollBehavior si lo cambiaste
+        document.documentElement.style.scrollBehavior = "";
+
+        // restaurar la posición de scroll (sin animación)
+        window.scrollTo(0, prev);
+        delete root.dataset._scrollY;
+        // --- end unlock ---
+
+        // remover listeners
+        if (root.__onKey) {
+          document.removeEventListener("keydown", root.__onKey);
+          root.__onKey = null;
+        }
+        if (root.__onOverlay) {
+          root
+            .querySelector("[data-modal-overlay]")
+            .removeEventListener("click", root.__onOverlay);
+          root.__onOverlay = null;
+        }
+
+        // restaurar foco al activador
+        if (lastActivator && typeof lastActivator.focus === "function") {
+          try {
+            lastActivator.focus({ preventScroll: true });
+          } catch (err) {
+            lastActivator.focus();
+          }
+        }
+        lastActivator = null;
+      }
+
+      // delegación global para abrir/cerrar
+      document.addEventListener("click", (e) => {
+        const openBtn = e.target.closest("[data-modal-open]");
+        if (openBtn) {
+          e.preventDefault();
+          const id = openBtn.getAttribute("data-modal-open");
+          const root = id ? document.getElementById(id) : null;
+          if (root) {
+            lastActivator = openBtn;
+            openModal(root);
+          }
+          return;
+        }
+
+        const closeBtn = e.target.closest("[data-modal-close]");
+        if (closeBtn) {
+          e.preventDefault();
+          // buscar modal ancestor si no se pasó id
+          const targetId =
+            closeBtn.getAttribute("data-modal-close") ||
+            closeBtn.closest("[data-modal]")?.id;
+          const root = targetId
+            ? document.getElementById(targetId)
+            : closeBtn.closest("[data-modal]");
+          if (root) closeModal(root);
+        }
+      });
+    }
+  }
+</script>

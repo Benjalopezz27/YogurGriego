@@ -14,34 +14,50 @@ export const benefits = [
   {
     title: "Alto en proteínas",
     icon: Protein,
+    description:
+      "El yogur griego es una excelente fuente de proteínas, esenciales para la reparación y construcción muscular.",
   },
   {
     title: "Energía sostenida",
     icon: Bolt,
+    description:
+      "Proporciona energía duradera gracias a su combinación de proteínas y carbohidratos, ideal para mantenerte activo durante el día.",
   },
   {
     title: "Fuente de calcio",
     icon: Bone,
+    description:
+      "El yogur griego es rico en calcio, fundamental para la salud ósea y dental.",
   },
   {
     title: "Mejora la digestión",
     icon: Gut,
+    description:
+      "Contiene probióticos que favorecen una flora intestinal saludable, mejorando la digestión y absorción de nutrientes.",
   },
   {
     title: "Amigo del corazón",
     icon: Heart,
+    description:
+      "El consumo regular de yogur griego puede ayudar a reducir el colesterol y mejorar la salud cardiovascular.",
   },
   {
     title: "Versátil en la cocina",
     icon: Spoon,
+    description:
+      "Su textura cremosa y sabor neutro lo hacen ideal para una variedad de recetas, desde desayunos hasta postres.",
   },
   {
     title: "Control del azúcar",
     icon: Glycemia,
+    description:
+      "El yogur griego tiene un índice glucémico bajo, ayudando a mantener niveles estables de azúcar en sangre.",
   },
   {
-    title: "Ayuda al control de peso",
+    title: "Control de peso",
     icon: Scale,
+    description:
+      "Su alto contenido en proteínas y bajo en calorías lo convierten en un aliado para quienes buscan mantener o perder peso.",
   },
 ];
 ---
@@ -58,12 +74,18 @@ export const benefits = [
       </p>
     </header>
     <div class="gap-6 grid-cols-2 lg:grid-cols-4 hidden md:grid">
-      {benefits.map((b) => <BeneficiosCard title={b.title} icon={b.icon} />)}
+      {
+        benefits.map((b) => (
+          <BeneficiosCard
+            title={b.title}
+            icon={b.icon}
+            description={b.description}
+          />
+        ))
+      }
     </div>
     <div class="block md:hidden relative">
-      <!-- wrapper con overflow hidden -->
       <div id="benefits-carousel" class="overflow-hidden relative">
-        <!-- slides track (flex) -->
         <div
           id="benefits-track"
           class="flex transition-transform duration-500 ease-in-out"
@@ -99,85 +121,105 @@ export const benefits = [
   </div>
 </section>
 <script is:inline>
-  // Carousel logic: visible=2 (en md+). Funciona con el DOM generado arriba.
   (function () {
-    // solo si existe el track (md+)
     const track = document.getElementById("benefits-track");
     if (!track) return;
 
     const prev = document.getElementById("benefits-prev");
     const next = document.getElementById("benefits-next");
 
-    const slides = Array.from(track.children); // cada slide es el wrapper con w-1/2 p-3
+    const slides = Array.from(track.children); // cada slide wrapper
     const total = slides.length;
-    const visible = 2; // siempre 2 visible en md+
+    if (!total) return;
 
-    let index = 0; // índice de la "página" (0..Math.ceil(total/visible)-1)
+    // índices por slide (no por página)
+    let index = 0; // índice del primer slide visible (0..maxIndex)
 
-    function pagesCount() {
-      return Math.max(1, Math.ceil(total / visible));
+    // calcula cuántos slides caben visibles ahora y el ancho de cada slide en px
+    function computeLayout() {
+      const container = track.parentElement; // elemento con overflow:hidden
+      const containerW = container.getBoundingClientRect().width;
+      const slideW = slides[0].getBoundingClientRect().width;
+      // si slideW es 0 (no renderizado aún), usamos fallback basado en porcentaje
+      const visible =
+        slideW > 0 ? Math.max(1, Math.floor(containerW / slideW)) : 2;
+      const maxIndex = Math.max(0, total - visible); // índice máximo del primer slide visible
+      return { containerW, slideW, visible, maxIndex };
     }
 
-    function updateButtons() {
-      const pages = pagesCount();
+    // actualiza botones (habilita/deshabilita)
+    function updateButtons(maxIndex) {
+      if (!prev || !next) return;
       prev.disabled = index <= 0;
-      next.disabled = index >= pages - 1;
+      next.disabled = index >= maxIndex;
       prev.classList.toggle("opacity-50", prev.disabled);
       next.classList.toggle("opacity-50", next.disabled);
     }
 
+    // mover el track para que el slide 'index' quede en el inicio de la vista
     function update() {
-      // calculamos porcentaje de translateX
-      // cada "page" avanza visible slides -> desplazamiento = index * (100 / pagesCount())
-      const pages = pagesCount();
-      const shiftPercent = -(index * (100 / pages));
-      track.style.transform = `translateX(${shiftPercent}%)`;
-      updateButtons();
+      const { slideW, visible, maxIndex } = computeLayout();
+
+      // normalizar index por si cambió el tamaño
+      if (index < 0) index = 0;
+      if (index > maxIndex) index = maxIndex;
+
+      // Usamos porcentaje basado en ancho del slide respecto al track
+      // calculamos porcentaje como (index * slideW) / trackWidth * 100
+      const trackWidth = track.getBoundingClientRect().width || slideW * total;
+      const shiftPx = index * slideW;
+      const shiftPercent = (shiftPx / trackWidth) * 100;
+      track.style.transform = `translateX(-${shiftPercent}%)`;
+
+      updateButtons(maxIndex);
     }
 
-    // recalcula el ancho de cada slide en caso de resize (no estrictamente necesario aquí porque usamos %)
-    function recalc() {
-      // no hacemos nada especial porque usamos % widths (w-1/2) en CSS
-      update();
+    // acciones prev/next: avanzan de a 1 slide
+    if (prev) {
+      prev.addEventListener("click", () => {
+        index = Math.max(0, index - 1);
+        update();
+      });
     }
 
-    prev.addEventListener("click", () => {
-      if (index > 0) {
-        index -= 1;
+    if (next) {
+      next.addEventListener("click", () => {
+        const { maxIndex } = computeLayout();
+        index = Math.min(maxIndex, index + 1);
         update();
-      }
-    });
+      });
+    }
 
-    next.addEventListener("click", () => {
-      const pages = pagesCount();
-      if (index < pages - 1) {
-        index += 1;
-        update();
-      }
-    });
+    // teclado accesible
+    if (prev)
+      prev.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          prev.click();
+        }
+      });
+    if (next)
+      next.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          next.click();
+        }
+      });
 
-    // soporte teclado
-    prev.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        prev.click();
-      }
-    });
-    next.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        next.click();
-      }
-    });
-
-    // recalc on resize (debounced)
+    // recalcular en resize (debounce)
     let t = null;
     window.addEventListener("resize", () => {
       clearTimeout(t);
-      t = setTimeout(recalc, 120);
+      t = setTimeout(() => {
+        // asegúrate que index sigue en rango después del resize
+        const { maxIndex } = computeLayout();
+        if (index > maxIndex) index = maxIndex;
+        update();
+      }, 100);
     });
 
     // init
-    update();
+    // fuerza una pequeña espera para que las medidas estén listas si el layout aún pinta
+    setTimeout(update, 50);
   })();
 </script>
