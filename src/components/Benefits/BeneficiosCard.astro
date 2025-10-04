@@ -1,29 +1,32 @@
 ---
-const { title, icon: Icon } = Astro.props;
-const modalId = `modal-${Math.random().toString(36).slice(2, 9)}`;
+import Info from "../../icons/Info.astro";
+const { title, icon: Icon, modalId } = Astro.props;
 ---
 
 <article
-  class="h-[80%] md:h-[100%] flex w-[100%] m-auto flex-col items-center text-center gap-2 sm:gap-6 p-3 md:p-6 rounded-3xl bg-white/90 shadow-sm transition-all duration-300 ease-in-out
+  class="h-[80%] md:h-[100%] flex flex-col justify-between w-[100%] md:w-[80%] lg:w-[100%] m-auto text-center gap-2 sm:gap-6 p-3 md:p-2 rounded-3xl bg-white/90 shadow-sm transition-all duration-300 ease-in-out
          hover:-translate-y-1 hover:shadow-md
-                border border-white/30 px-6"
+         border border-white/30 px-6 relative"
 >
-  <div
-    class="flex items-center justify-center w-14 h-14 rounded-lg bg-transparent"
-  >
-    {(<Icon class="w-7 h-7 lg:w-9 lg:h-9  text-red-700" />)}
-  </div>
+  <div class="flex flex-col items-center gap-2">
+    <div
+      class="flex items-center justify-center w-14 h-14 rounded-lg bg-transparent"
+    >
+      {(<Icon class="w-7 h-7 lg:w-9 lg:h-9  text-red-700" />)}
+    </div>
 
-  <h3 class="text-lg md:text-base lg:text-lg font-semibold text-slate-800">
-    {title}
-  </h3>
-  <button
-    data-modal-target="default-modal"
-    data-modal-toggle="default-modal"
-    class="block text-red-700 font-medium text-sm px-5 text-center"
-    type="button"
-    data-modal-open={modalId}
-  >
-    Ver más
-  </button>
+    <h3 class="text-lg md:text-base lg:text-lg font-semibold text-slate-800">
+      {title}
+    </h3>
+  </div>
+  <div class="flex justify-end">
+    <button
+      data-modal-target={modalId}
+      data-modal-toggle={modalId}
+      class="block text-red-700 font-medium text-sm px-3 pb-10 md:pb-1"
+      type="button"
+    >
+      <Info class="w-6 h-6 md:w-7 md:h-7 hover:cursor-pointer" />
+    </button>
+  </div>
 </article>
