@@ -24,6 +24,7 @@ const { title, description, imageUrl, link }: Props = Astro.props;
     <h3 class="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
     <p class="text-gray-600 text-sm flex-grow">{description}</p>
     <a
+      arial-label={`Ver más sobre ${title}`}
       href={link}
       target="_blank"
       rel="noopener noreferrer"
