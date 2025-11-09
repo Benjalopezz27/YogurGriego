@@ -1,8 +1,8 @@
 ---
 import fondo from "../assets/fondo.webp";
 import fondo2 from "../assets/fondo2.webp";
-
 import fondo3 from "../assets/fondo3.webp";
+
 const slidesProp = Astro.props.slides ?? null;
 const id = `hero-${Math.random().toString(36).slice(2, 9)}`;
 const defaultSlides = [
@@ -38,6 +38,7 @@ const slides = slidesProp ?? defaultSlides;
   class="relative w-full overflow-hidden"
   aria-roledescription="carousel"
 >
+  <!-- Slides wrapper -->
   <div
     class="flex transition-transform duration-700 ease-in-out"
     data-slides-wrapper
@@ -51,6 +52,7 @@ const slides = slidesProp ?? defaultSlides;
           role="group"
           aria-roledescription="slide"
           aria-label={`Slide ${i + 1} of ${slides.length}`}
+          data-slide-index={i}
         >
           <img
             src={s.src}
@@ -84,18 +86,69 @@ const slides = slidesProp ?? defaultSlides;
       ))
     }
   </div>
+
+  <!-- Prev/Next buttons -->
+  <button
+    type="button"
+    data-carousel-prev
+    class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center hover:bg-white focus:outline-none"
+    aria-label="Anterior slide"
+  >
+    <!-- left chevron -->
+    <svg
+      class="w-5 h-5 text-gray-700"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M15 18l-6-6 6-6"></path></svg
+    >
+  </button>
+
+  <button
+    type="button"
+    data-carousel-next
+    class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center hover:bg-white focus:outline-none"
+    aria-label="Siguiente slide"
+  >
+    <!-- right chevron -->
+    <svg
+      class="w-5 h-5 text-gray-700"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 18l6-6-6-6"></path></svg
+    >
+  </button>
+
+  <!-- Indicators (dots) -->
+  <div class="absolute left-0 right-0 bottom-6 flex justify-center gap-2 z-30">
+    <div data-carousel-indicators class="flex items-center gap-2"></div>
+  </div>
 </div>
 
 <script is:inline>
   window.addEventListener("DOMContentLoaded", () => {
-    // Buscar el primer slides wrapper en la página
     const wrapper = document.querySelector("[data-slides-wrapper]");
     if (!wrapper) return;
 
-    // el root (contenedor) será el ancestro directo que contiene al wrapper
-    const root = wrapper.closest("[id]") || wrapper.parentElement;
+    const root = wrapper.closest("[data-carousel-id]") || wrapper.parentElement;
     const total = wrapper.children.length;
     if (!total) return;
+
+    // elements
+    const prevBtn = root.querySelector("[data-carousel-prev]");
+    const nextBtn = root.querySelector("[data-carousel-next]");
+    const indicatorsContainer = root.querySelector(
+      "[data-carousel-indicators]"
+    );
 
     let current = 0;
 
@@ -115,19 +168,54 @@ const slides = slidesProp ?? defaultSlides;
     let timer = null;
     let isPaused = false;
 
+    // create indicators
+    const indicators = [];
+    for (let i = 0; i < total; i++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className =
+        "w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white transition-all duration-150";
+      btn.setAttribute("aria-label", `Ir al slide ${i + 1}`);
+      btn.dataset.index = String(i);
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        goTo(i);
+        restartAutoplay();
+      });
+      indicatorsContainer.appendChild(btn);
+      indicators.push(btn);
+    }
+
+    function updateIndicators() {
+      indicators.forEach((b, idx) => {
+        if (idx === current) {
+          b.classList.remove("bg-white/60");
+          b.classList.add("bg-white");
+        } else {
+          b.classList.remove("bg-white");
+          b.classList.add("bg-white/60");
+        }
+      });
+    }
+
     function update() {
       const pct = -(100 / total) * current;
       wrapper.style.transform = `translateX(${pct}%)`;
+      updateIndicators();
     }
 
     function goTo(index) {
-      current = ((index % total) + total) % total; // normaliza índice
+      current = ((index % total) + total) % total;
       update();
     }
 
     function next() {
       goTo(current + 1);
     }
+    function prev() {
+      goTo(current - 1);
+    }
+
     function start() {
       if (prefersReduced) return;
       stop();
@@ -141,8 +229,28 @@ const slides = slidesProp ?? defaultSlides;
         timer = null;
       }
     }
+    function restartAutoplay() {
+      stop();
+      start();
+    }
 
-    // pause on hover/focus (si no reduced-motion)
+    // button listeners
+    if (nextBtn) {
+      nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        next();
+        restartAutoplay();
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        prev();
+        restartAutoplay();
+      });
+    }
+
+    // pause on hover/focus (if not reduced-motion)
     if (!prefersReduced) {
       root.addEventListener("mouseenter", () => {
         isPaused = true;
@@ -158,17 +266,29 @@ const slides = slidesProp ?? defaultSlides;
       });
     }
 
-    // pausa al cambiar de pestaña (opcional pero útil)
+    // keyboard navigation
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        prev();
+        restartAutoplay();
+      }
+      if (e.key === "ArrowRight") {
+        next();
+        restartAutoplay();
+      }
+    });
+
+    // visibility change
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) stop();
       else start();
     });
 
-    // inicializar
+    // init
     update();
     start();
 
-    // cleanup si el elemento se elimina del DOM
+    // cleanup observer
     const obs = new MutationObserver(() => {
       if (!document.body.contains(wrapper)) {
         stop();
