@@ -2,7 +2,7 @@
 import fondo from "../assets/fondo.webp";
 import fondo2 from "../assets/fondo2.webp";
 import fondo3 from "../assets/fondo3.webp";
-
+import ArrowRight from "../icons/arrowRight.astro";
 const slidesProp = Astro.props.slides ?? null;
 const id = `hero-${Math.random().toString(36).slice(2, 9)}`;
 const defaultSlides = [
@@ -75,9 +75,10 @@ const slides = slidesProp ?? defaultSlides;
                 <a
                   aria-label={s.ctaText}
                   href={s.ctaHref}
-                  class="inline-block bg-red-400 hover:bg-red-500 text-white px-6 py-3 rounded-full font-semibold shadow transition-colors duration-200"
+                  class="group inline-flex items-center bg-red-600/50 hover:bg-red-600/80 text-white px-10 py-2 rounded-md font-semibold shadow transition-colors duration-200"
                 >
                   {s.ctaText}
+                  <ArrowRight class="inline-block stroke-2 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
                 </a>
               </div>
             </div>

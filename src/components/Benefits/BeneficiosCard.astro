@@ -10,9 +10,9 @@ const { title, icon: Icon, modalId } = Astro.props;
 >
   <div class="flex flex-col items-center gap-2 flex-grow">
     <div
-      class="flex items-center justify-center w-14 h-14 rounded-lg bg-transparent"
+      class="flex items-center justify-center w-14 h-14 rounded-xl bg-red-100/40 mb-2 md:mb-0"
     >
-      {(<Icon class="w-7 h-7 lg:w-9 lg:h-9 text-red-700" />)}
+      {(<Icon class="w-7 h-7 lg:w-9 lg:h-9 text-red-800 stroke-2" />)}
     </div>
 
     <h3 class="text-lg md:text-base lg:text-lg font-semibold text-slate-800">
@@ -27,7 +27,7 @@ const { title, icon: Icon, modalId } = Astro.props;
       class="block text-red-700 font-medium text-sm px-3 pb-5 md:pb-1"
       type="button"
     >
-      <Info class="w-6 h-6 md:w-7 md:h-7 hover:cursor-pointer" />
+      <Info class="w-6 h-6 md:w-7 md:h-7 hover:cursor-pointer stroke-2" />
     </button>
   </div>
 </article>
