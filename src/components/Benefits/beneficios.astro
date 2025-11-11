@@ -66,7 +66,7 @@ export const benefits = [
 ];
 ---
 
-<section data-reveal data-reveal-delay="100" class="py-14 px-6" id="beneficios">
+<section class="py-14 px-6" id="beneficios">
   <div class="max-w-6xl mx-auto">
     <header class="text-center mb-8">
       <span
@@ -81,8 +81,6 @@ export const benefits = [
         Salud, sabor y versatilidad en cada pote.
       </p>
     </header>
-
-    <!-- Desktop grid (visible md+) -->
     <div class="gap-6 grid-cols-2 lg:grid-cols-4 hidden md:grid">
       {
         benefits.map((b, i) => (
@@ -95,8 +93,6 @@ export const benefits = [
         ))
       }
     </div>
-
-    <!-- Mobile carousel (visible <md) -->
     <div class="block md:hidden relative">
       <div id="benefits-carousel" class="overflow-hidden relative">
         <div
@@ -134,8 +130,6 @@ export const benefits = [
         <BotonSiguiente />
       </button>
     </div>
-
-    <!-- IMPORTANT: renderizamos los modales FUERA del contenedor responsive, siempre en el DOM -->
     {
       benefits.map((b, i) => (
         <ModalBeneficios id={`benefit-modal-${i}`} title={b.title}>
@@ -157,26 +151,20 @@ export const benefits = [
     const prev = document.getElementById("benefits-prev");
     const next = document.getElementById("benefits-next");
 
-    const slides = Array.from(track.children); // cada slide wrapper
+    const slides = Array.from(track.children);
     const total = slides.length;
     if (!total) return;
-
-    // índices por slide (no por página)
-    let index = 0; // índice del primer slide visible (0..maxIndex)
-
-    // calcula cuántos slides caben visibles ahora y el ancho de cada slide en px
+    let index = 0;
     function computeLayout() {
-      const container = track.parentElement; // elemento con overflow:hidden
+      const container = track.parentElement;
       const containerW = container.getBoundingClientRect().width;
       const slideW = slides[0].getBoundingClientRect().width;
-      // si slideW es 0 (no renderizado aún), usamos fallback basado en porcentaje
       const visible =
         slideW > 0 ? Math.max(1, Math.floor(containerW / slideW)) : 2;
-      const maxIndex = Math.max(0, total - visible); // índice máximo del primer slide visible
+      const maxIndex = Math.max(0, total - visible);
       return { containerW, slideW, visible, maxIndex };
     }
 
-    // actualiza botones (habilita/deshabilita)
     function updateButtons(maxIndex) {
       if (!prev || !next) return;
       prev.disabled = index <= 0;
@@ -184,17 +172,10 @@ export const benefits = [
       prev.classList.toggle("opacity-50", prev.disabled);
       next.classList.toggle("opacity-50", next.disabled);
     }
-
-    // mover el track para que el slide 'index' quede en el inicio de la vista
     function update() {
-      const { slideW, visible, maxIndex } = computeLayout();
-
-      // normalizar index por si cambió el tamaño
+      const { slideW, maxIndex } = computeLayout();
       if (index < 0) index = 0;
       if (index > maxIndex) index = maxIndex;
-
-      // Usamos porcentaje basado en ancho del slide respecto al track
-      // calculamos porcentaje como (index * slideW) / trackWidth * 100
       const trackWidth = track.getBoundingClientRect().width || slideW * total;
       const shiftPx = index * slideW;
       const shiftPercent = (shiftPx / trackWidth) * 100;
@@ -202,8 +183,6 @@ export const benefits = [
 
       updateButtons(maxIndex);
     }
-
-    // acciones prev/next: avanzan de a 1 slide
     if (prev) {
       prev.addEventListener("click", () => {
         index = Math.max(0, index - 1);
@@ -218,8 +197,6 @@ export const benefits = [
         update();
       });
     }
-
-    // teclado accesible
     if (prev)
       prev.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -234,21 +211,16 @@ export const benefits = [
           next.click();
         }
       });
-
-    // recalcular en resize (debounce)
     let t = null;
     window.addEventListener("resize", () => {
       clearTimeout(t);
       t = setTimeout(() => {
-        // asegúrate que index sigue en rango después del resize
         const { maxIndex } = computeLayout();
         if (index > maxIndex) index = maxIndex;
         update();
       }, 100);
     });
 
-    // init
-    // fuerza una pequeña espera para que las medidas estén listas si el layout aún pinta
     setTimeout(update, 50);
   })();
 </script>
