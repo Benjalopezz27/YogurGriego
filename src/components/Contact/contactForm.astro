@@ -1,0 +1,48 @@
+<section
+  class="max-w-full mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-200"
+>
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+    ¡Hablemos por WhatsApp!
+  </h2>
+
+  <form id="whatsappForm" class="flex flex-col gap-4">
+    <input
+      type="text"
+      id="nombre"
+      placeholder="Tu nombre"
+      class="border px-3 py-2 rounded-lg"
+      required
+    />
+
+    <textarea
+      id="mensaje"
+      placeholder="Tu mensaje"
+      class="border px-3 py-2 rounded-lg h-24"
+      required></textarea>
+
+    <button
+      type="submit"
+      class="bg-red-400/80 hover:bg-red-500 text-white py-2 rounded-lg font-medium transition"
+    >
+      Enviar por WhatsApp
+    </button>
+  </form>
+</section>
+
+<script is:inline>
+  const form = document.getElementById("whatsappForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const mensaje = document.getElementById("mensaje").value;
+
+    const numero = "549381470386";
+
+    const texto = `Hola! Soy ${nombre}.%0A%0A${mensaje}`;
+    const link = `https://wa.me/${numero}?text=${texto}`;
+
+    window.open(link, "_blank");
+  });
+</script>
