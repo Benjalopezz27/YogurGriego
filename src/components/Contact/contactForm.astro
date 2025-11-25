@@ -16,7 +16,7 @@
 
     <textarea
       id="mensaje"
-      placeholder="Tu mensaje"
+      placeholder="Ej:Quiero comprar 2 potes de yogur..."
       class="border px-3 py-2 rounded-lg h-24"
       required></textarea>
 
@@ -38,7 +38,7 @@
     const nombre = document.getElementById("nombre").value;
     const mensaje = document.getElementById("mensaje").value;
 
-    const numero = "549381470386";
+    const numero = "54381470386";
 
     const texto = `Hola! Soy ${nombre}.%0A%0A${mensaje}`;
     const link = `https://wa.me/${numero}?text=${texto}`;
