@@ -1,81 +1,52 @@
 ---
 import RecipesCard from "./RecipesCard.astro";
-import receta1 from "../../assets/receta1.webp";
-import receta2 from "../../assets/receta2.webp";
-import receta3 from "../../assets/receta3.webp";
-import receta4 from "../../assets/receta4.webp";
-import receta5 from "../../assets/receta5.webp";
-import receta6 from "../../assets/receta6.webp";
-const recetas = [
-  {
-    title: "Desayuno Energético",
-    description:
-      "Comienza tu día con un tazón de yogur griego, frutas frescas y granola casera.",
-    imageUrl: receta1.src,
-    link: "https://cookpad.com/ar/r/16943469",
-  },
-  {
-    title: "Smoothie Refrescante",
-    description:
-      "Mezcla yogur griego con espinacas, plátano y un toque de miel para un smoothie nutritivo.",
-    imageUrl: receta2.src,
-    link: "https://www.petitchef.es/recetas/bebida/smoothie-de-frutos-rojos-fid-1560752",
-  },
-  {
-    title: "Aderezo Cremoso",
-    description:
-      "Prepara un aderezo saludable mezclando yogur griego con hierbas frescas y limón.",
-    imageUrl: receta3.src,
-    link: "https://www.cookforyourlife.org/es/recetas/saludable-aderezo-ranch-de-yogur/",
-  },
-  {
-    title: "Helado de Yogur Griego",
-    description:
-      "Disfruta de un postre ligero y saludable haciendo helado casero con yogur griego y frutas.",
-    imageUrl: receta4.src,
-    link: "https://cookpad.com/ar/r/17160565",
-  },
-  {
-    title: "Pancakes con Yogur Griego",
-    description:
-      "Incorpora yogur griego en la masa de tus pancakes para un desayuno esponjoso y rico en proteínas.",
-    imageUrl: receta5.src,
-    link: "https://www.quericavida.com/recetas/pancakes-de-yogur/aaccade5-c17f-4e5a-a968-ba2742ace8e4",
-  },
-  {
-    title: "Cheese Cake Saludable",
-    description:
-      "Prepara un cheese cake ligero usando yogur griego en lugar de queso crema.",
-    imageUrl: receta6.src,
-    link: "https://cookpad.com/ar/r/17160334",
-  },
-];
+import { getCollection } from "astro:content";
+
+const recetas = await getCollection("recetas");
+const sorted = recetas.sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0));
 ---
 
-<section class="py-14 px-6" id="recetas">
-  <header class="text-center mb-8">
-    <span
-      class="bg-red-100/60 text-red-800 py-1 px-2 rounded-3xl border border-red-800 font-semibold text-sm inline-block mb-4"
-      >Inspiración Culinaria</span
-    >
-    <h2 class="text-3xl md:text-4xl font-extrabold text-[#1a1c2d]">
-      Diferentes recetas con yogur griego
-    </h2>
-    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">
-      Explora todo tipo de recetas que incorporan yogur griego, desde desayunos
-      energéticos hasta postres indulgentes.
-    </p>
-  </header>
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    {
-      recetas.map((receta) => (
-        <RecipesCard
-          title={receta.title}
-          description={receta.description}
-          imageUrl={receta.imageUrl}
-          link={receta.link}
-        />
-      ))
-    }
+<section class="py-20 px-6" id="recetas">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <header class="text-center mb-16">
+      <div class="badge mb-5 inline-flex">Inspiración Culinaria</div>
+      <h2 class="section-heading mb-4">
+        Recetas con <span>Yogur Griego</span>
+      </h2>
+      <div class="divider mx-auto"></div>
+      <p class="mt-6 max-w-2xl mx-auto text-lg" style="color: var(--color-text-secondary);">
+        Explorá recetas que demuestran la versatilidad del yogur griego artesanal.
+        Desde desayunos energéticos hasta postres de autor.
+      </p>
+    </header>
+
+    <!-- Grid -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        sorted.map((receta) => (
+          <RecipesCard
+            title={receta.data.titulo}
+            description={receta.data.descripcion}
+            imageUrl={receta.data.imagenPrincipal}
+            link={receta.data.link}
+            categoria={receta.data.categoria}
+            tiempoPreparacion={receta.data.tiempoPreparacion}
+            dificultad={receta.data.dificultad}
+          />
+        ))
+      }
+    </div>
+
+    <!-- CTA to full recipes page -->
+    <div class="text-center mt-12">
+      <a href="/recetas" class="btn-outline">
+        Ver todas las recetas
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
   </div>
 </section>

@@ -1,73 +1,158 @@
 ---
-import "../../global.css";
-import Toggle from "./toggle.astro";
 import Logo from "./logo.astro";
 import Nav from "./nav.astro";
+import { MessageCircle } from "lucide-astro";
 ---
 
 <div
   id="menuOverlay"
-  class="fixed inset-0 bg-black/30 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-40"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-40"
 >
 </div>
 
 <header
   id="site-header"
-  class="flex justify-center fixed items-center py-3 md:py-5 w-full mx-auto px-6 top-0 z-50 backdrop-blur-sm border border-white/30 shadow-sm"
+  class="flex justify-center fixed items-center py-4 md:py-5 w-full px-6 top-0 z-50 transition-all duration-500"
+  style="background: rgba(13,13,13,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);"
 >
-  <div class="w-full max-w-[1200px] flex items-center justify-between">
+  <div class="w-full max-w-[1200px] flex items-center justify-between gap-8">
     <Logo />
-    <Toggle />
-    <Nav />
+
+    <!-- Desktop nav -->
+    <nav class="hidden xl:flex items-center gap-8">
+      <Nav />
+    </nav>
+
+    <!-- Desktop CTA -->
+    <a
+      href="https://wa.me/543814470386?text=Hola!%20Me%20interesa%20pedir%20yogur%20griego"
+      target="_blank"
+      rel="noopener"
+      class="hidden xl:inline-flex items-center gap-2 btn-primary py-2.5 px-5 text-xs group"
+      aria-label="Pedir por WhatsApp"
+    >
+      <MessageCircle
+        class="w-4 h-4 transition-transform group-hover:scale-110"
+      />
+      Pedir Ahora
+    </a>
+
+    <!-- Hamburger -->
+    <button
+      id="menuToggle"
+      class="xl:hidden flex flex-col gap-1.5 p-2 rounded-md border border-white/10 hover:border-white/20 transition-colors"
+      aria-expanded="false"
+      aria-label="Abrir menú"
+    >
+      <span
+        class="block w-5 h-0.5 bg-[var(--color-accent)] transition-all duration-300"
+        id="ham-line-1"></span>
+      <span
+        class="block w-5 h-0.5 bg-[var(--color-accent)] transition-all duration-300"
+        id="ham-line-2"></span>
+      <span
+        class="block w-4 h-0.5 bg-[var(--color-accent)] transition-all duration-300"
+        id="ham-line-3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile nav dropdown -->
+  <div
+    id="navMenu"
+    role="navigation"
+    class="absolute top-full left-0 w-full flex flex-col items-center gap-5 py-8
+           transform scale-y-0 opacity-0 transition-all duration-300 origin-top z-50
+           xl:hidden"
+    style="background: rgba(13,13,13,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);"
+  >
+    <Nav mobile />
+    <a
+      href="https://wa.me/543814470386?text=Hola!%20Me%20interesa%20pedir%20yogur%20griego"
+      target="_blank"
+      rel="noopener"
+      class="btn-whatsapp mt-2"
+    >
+      Pedir por WhatsApp
+    </a>
   </div>
 </header>
 
 <script>
-  const toggle = document.getElementById("menuToggle");
-  const menu = document.getElementById("navMenu");
-  const overlay = document.getElementById("menuOverlay");
+  function initHeader() {
+    const toggle = document.getElementById("menuToggle");
+    const menu = document.getElementById("navMenu");
+    const overlay = document.getElementById("menuOverlay");
+    const line1 = document.getElementById("ham-line-1");
+    const line2 = document.getElementById("ham-line-2");
+    const line3 = document.getElementById("ham-line-3");
+    const header = document.getElementById("site-header");
 
-  function openMenu() {
-    if (menu && overlay && toggle) {
-      menu.classList.remove("scale-y-0", "opacity-0");
-      menu.classList.add("scale-y-100", "opacity-100");
-      overlay.classList.remove("opacity-0", "pointer-events-none");
-      overlay.classList.add("opacity-100", "pointer-events-auto");
-      toggle.setAttribute("aria-expanded", "true");
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        header?.style.setProperty("background", "rgba(13,13,13,0.95)");
+      } else {
+        header?.style.setProperty("background", "rgba(13,13,13,0.7)");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    function openMenu() {
+      if (menu && overlay && toggle) {
+        menu.classList.remove("scale-y-0", "opacity-0");
+        menu.classList.add("scale-y-100", "opacity-100");
+        overlay.classList.remove("opacity-0", "pointer-events-none");
+        overlay.classList.add("opacity-100", "pointer-events-auto");
+        toggle.setAttribute("aria-expanded", "true");
+        if (line1) line1.style.transform = "rotate(45deg) translate(5px, 5px)";
+        if (line2) line2.style.opacity = "0";
+        if (line3) {
+          line3.style.transform = "rotate(-45deg) translate(5px, -5px)";
+          line3.style.width = "20px";
+        }
+      }
+    }
+
+    function closeMenu() {
+      if (menu && overlay && toggle) {
+        menu.classList.remove("scale-y-100", "opacity-100");
+        menu.classList.add("scale-y-0", "opacity-0");
+        overlay.classList.remove("opacity-100", "pointer-events-auto");
+        overlay.classList.add("opacity-0", "pointer-events-none");
+        toggle.setAttribute("aria-expanded", "false");
+        if (line1) line1.style.transform = "";
+        if (line2) line2.style.opacity = "";
+        if (line3) {
+          line3.style.transform = "";
+          line3.style.width = "";
+        }
+      }
+    }
+
+    if (toggle && menu && overlay) {
+      toggle.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        if (expanded) closeMenu();
+        else openMenu();
+      });
+
+      overlay.addEventListener("click", closeMenu);
+
+      const handleEsc = (e: { key: string }) => {
+        if (e.key === "Escape") closeMenu();
+      };
+      document.addEventListener("keydown", handleEsc);
+
+      menu.querySelectorAll("a").forEach((link) =>
+        link.addEventListener("click", () => {
+          if (window.matchMedia("(max-width: 1279px)").matches) closeMenu();
+        }),
+      );
     }
   }
 
-  function closeMenu() {
-    if (menu && overlay && toggle) {
-      menu.classList.remove("scale-y-100", "opacity-100");
-      menu.classList.add("scale-y-0", "opacity-0");
-      overlay.classList.remove("opacity-100", "pointer-events-auto");
-      overlay.classList.add("opacity-0", "pointer-events-none");
-      toggle.setAttribute("aria-expanded", "false");
-    }
-  }
-
-  if (toggle && menu && overlay) {
-    toggle.addEventListener("click", () => {
-      const expanded = toggle.getAttribute("aria-expanded") === "true";
-      if (expanded) closeMenu();
-      else openMenu();
-    });
-
-    // click en overlay cierra
-    overlay.addEventListener("click", closeMenu);
-
-    // Esc para cerrar
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
-    });
-
-    // opcional: cerrar al hacer click en un link del menú (útil en mobile)
-    menu.querySelectorAll("a").forEach((link) =>
-      link.addEventListener("click", () => {
-        // solo cerrar en pantallas pequeñas
-        if (window.matchMedia("(max-width: 1279px)").matches) closeMenu();
-      })
-    );
-  }
+  // Initialize on first load
+  initHeader();
+  // Re-initialize on View Transitions navigation
+  document.addEventListener("astro:page-load", initHeader);
 </script>

@@ -4,39 +4,34 @@ import ContactSteps from "./contactSteps.astro";
 import ContactForm from "./contactForm.astro";
 ---
 
-<main class="w-full px-6 py-16">
-  <header class="text-center mb-12">
-    <span
-      class="bg-red-100/60 text-red-800 py-1 px-2 rounded-3xl border border-red-800 font-semibold text-sm inline-block mb-4"
-      >Contactá con Nosotros</span
-    >
-    <h2 class="text-3xl md:text-4xl font-extrabold text-[#1a1c2d]">
-      ¿Cómo comprar nuestro Yogur Griego?
-    </h2>
-    <p class="mt-3 text-lg text-slate-600">
-      Pedilo en pocos pasos y recibilo fresco en tu casa. <span
-        class="font-medium"
-        >Envios por cantidad en <span class="bg-red-400/30"
-          >Yerba Buena.
-        </span></span
+<section class="w-full px-6 py-20" id="contacto">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <header class="text-center mb-16">
+      <div class="badge mb-5 inline-flex">Pedí tu yogur</div>
+      <h2 class="section-heading mb-4">
+        ¿Cómo comprar nuestro <span>Yogur Griego?</span>
+      </h2>
+      <div class="divider mx-auto"></div>
+      <p class="mt-6 max-w-xl mx-auto text-lg" style="color: var(--color-text-secondary);">
+        Pedilo en pocos pasos y recibilo fresco en tu casa.
+        <strong style="color: var(--color-accent);">Envíos en Yerba Buena y San Miguel de Tucumán.</strong>
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Main -->
+      <section
+        class="md:col-span-2 rounded-2xl p-8"
+        style="background: var(--color-surface); border: 1px solid var(--color-border);"
       >
-    </p>
-  </header>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <section class="md:col-span-2 bg-white rounded-lg shadow p-6">
-      <ContactSteps />
-      <ContactForm />
-      <div class="mt-10 bg-red-50 p-4 rounded-lg border border-red-100">
-        <p class="text-sm text-gray-700">
-          <strong>Métodos de pago:</strong> efectivo al recibir, transferencia bancaria
-          o Mercado Pago.
-        </p>
-        <p class="text-sm text-gray-600 mt-2">
-          Nuestro yogur es <span class="font-semibold">100% artesanal</span>,
-          sin conservantes y con ingredientes naturales.
-        </p>
-      </div>
-    </section>
-    <ContactAside />
+        <ContactSteps />
+        <ContactForm />
+      </section>
+
+      <!-- Aside -->
+      <ContactAside />
+    </div>
   </div>
-</main>
+</section>

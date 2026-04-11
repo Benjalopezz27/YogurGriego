@@ -8,9 +8,6 @@ import Bolt from "../../icons/bolt.astro";
 import Gut from "../../icons/gut.astro";
 import BeneficiosCard from "./BeneficiosCard.astro";
 import Scale from "../../icons/scale.astro";
-import ModalBeneficios from "./modalBeneficios.astro";
-import BeneficiosFooter from "./beneficiosFooter.astro";
-
 import BotonAnterior from "../../icons/BotonAnterior.astro";
 import BotonSiguiente from "../../icons/BotonSiguiente.astro";
 
@@ -52,7 +49,7 @@ export const benefits = [
       "Su textura cremosa y sabor neutro lo hacen ideal para una variedad de recetas, desde desayunos hasta postres.",
   },
   {
-    title: " Glucemia balanceada",
+    title: "Glucemia balanceada",
     icon: Glycemia,
     description:
       "El yogur griego tiene un índice glucémico bajo, ayudando a mantener niveles estables de azúcar en sangre.",
@@ -66,81 +63,104 @@ export const benefits = [
 ];
 ---
 
-<section class="py-14 px-6" id="beneficios">
+<section class="py-20 px-6" id="beneficios">
   <div class="max-w-6xl mx-auto">
-    <header class="text-center mb-8">
-      <span
-        class="bg-red-100/60 text-red-800 py-1 px-2 rounded-3xl border border-red-800 font-semibold text-sm inline-block mb-4"
-        >¿Por qué Elegirnos?</span
-      >
-      <h2 class="text-3xl md:text-4xl font-extrabold text-[#1a1c2d]">
-        Beneficios del Yogur Griego
+    <!-- Section header -->
+    <header class="text-center mb-16">
+      <div class="badge mb-5 inline-flex">¿Por qué Elegirnos?</div>
+      <h2 class="section-heading mb-4">
+        Beneficios del <span>Yogur Griego</span>
       </h2>
-      <p class="mt-2 text-slate-600 max-w-2xl mx-auto">
-        Descubrí por qué el yogur griego es una gran elección para tu día a día.
-        Salud, sabor y versatilidad en cada pote.
+      <div class="divider mx-auto"></div>
+      <p
+        class="mt-6 max-w-2xl mx-auto text-lg"
+        style="color: var(--color-text-secondary);"
+      >
+        Descubrí por qué el yogur griego artesanal es la mejor elección para tu
+        día a día. Salud, sabor y versatilidad en cada pote.
       </p>
     </header>
-    <div class="gap-6 grid-cols-2 lg:grid-cols-4 hidden md:grid">
+
+    <!-- Desktop grid -->
+    <div class="gap-4 grid-cols-2 lg:grid-cols-4 hidden md:grid">
       {
-        benefits.map((b, i) => (
+        benefits.map((b) => (
           <BeneficiosCard
             title={b.title}
             icon={b.icon}
             description={b.description}
-            modalId={`benefit-modal-${i}`}
           />
         ))
       }
     </div>
-    <div class="block md:hidden relative">
-      <div id="benefits-carousel" class="overflow-hidden relative">
+
+    <!-- Mobile carousel -->
+    <div class="block md:hidden relative px-6">
+      <div id="benefits-carousel" class="overflow-hidden">
         <div
           id="benefits-track"
           class="flex transition-transform duration-500 ease-in-out"
           style="transform: translateX(0%);"
         >
           {
-            benefits.map((b, i) => (
-              <div class="w-3xl px-2">
+            benefits.map((b) => (
+              <div class="w-full flex-shrink-0 px-2 h-full">
                 <BeneficiosCard
                   title={b.title}
                   icon={b.icon}
                   description={b.description}
-                  modalId={`benefit-modal-${i}`}
                 />
               </div>
             ))
           }
         </div>
       </div>
-      <!-- botones prev/next -->
+
       <button
         id="benefits-prev"
-        class="md:hidden flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white focus:outline-none"
+        class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full flex items-center justify-center transition-all"
+        style="background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-primary);"
         aria-label="Anterior"
       >
         <BotonAnterior />
       </button>
       <button
         id="benefits-next"
-        class="flex md:hidden items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-20 w-10 h-10 rounded-full bg-white/90 shadow hover:bg-white focus:outline-none"
+        class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full flex items-center justify-center transition-all"
+        style="background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-primary);"
         aria-label="Siguiente"
       >
         <BotonSiguiente />
       </button>
     </div>
-    {
-      benefits.map((b, i) => (
-        <ModalBeneficios id={`benefit-modal-${i}`} title={b.title}>
-          <div class="space-y-3">
-            <p class="text-sm text-slate-700">{b.description}</p>
-          </div>
-        </ModalBeneficios>
-      ))
-    }
+
+    <!-- Footer certifications -->
+    <div
+      class="mt-16 p-8 rounded-2xl text-center"
+      style="background: var(--color-surface); border: 1px solid var(--color-border);"
+    >
+      <h3
+        class="text-xl font-semibold mb-2"
+        style="font-family: var(--font-serif); color: var(--color-text-primary);"
+      >
+        Proceso Artesanal Certificado
+      </h3>
+      <p
+        class="max-w-xl mx-auto text-sm"
+        style="color: var(--color-text-secondary);"
+      >
+        Nuestro proceso de fermentación de 12 horas elimina naturalmente la
+        lactosa, haciendo nuestro yogur más fácil de digerir incluso para
+        personas con sensibilidad láctea.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 my-4">
+        <span class="badge badge-green">✓ Sin Conservantes</span>
+        <span class="badge badge-green">✓ Sin Colorantes</span>
+        <span class="badge badge-green">✓ Fermentación 12hs</span>
+        <span class="badge badge-green">✓ Bajo en Lactosa</span>
+      </div>
+    </div>
   </div>
-  <BeneficiosFooter />
 </section>
 
 <script is:inline>
@@ -150,17 +170,17 @@ export const benefits = [
 
     const prev = document.getElementById("benefits-prev");
     const next = document.getElementById("benefits-next");
-
     const slides = Array.from(track.children);
     const total = slides.length;
     if (!total) return;
     let index = 0;
+
     function computeLayout() {
       const container = track.parentElement;
       const containerW = container.getBoundingClientRect().width;
       const slideW = slides[0].getBoundingClientRect().width;
       const visible =
-        slideW > 0 ? Math.max(1, Math.floor(containerW / slideW)) : 2;
+        slideW > 0 ? Math.max(1, Math.floor(containerW / slideW)) : 1;
       const maxIndex = Math.max(0, total - visible);
       return { containerW, slideW, visible, maxIndex };
     }
@@ -169,9 +189,10 @@ export const benefits = [
       if (!prev || !next) return;
       prev.disabled = index <= 0;
       next.disabled = index >= maxIndex;
-      prev.classList.toggle("opacity-50", prev.disabled);
-      next.classList.toggle("opacity-50", next.disabled);
+      prev.style.opacity = prev.disabled ? "0.4" : "1";
+      next.style.opacity = next.disabled ? "0.4" : "1";
     }
+
     function update() {
       const { slideW, maxIndex } = computeLayout();
       if (index < 0) index = 0;
@@ -180,37 +201,21 @@ export const benefits = [
       const shiftPx = index * slideW;
       const shiftPercent = (shiftPx / trackWidth) * 100;
       track.style.transform = `translateX(-${shiftPercent}%)`;
-
       updateButtons(maxIndex);
     }
-    if (prev) {
+
+    if (prev)
       prev.addEventListener("click", () => {
         index = Math.max(0, index - 1);
         update();
       });
-    }
-
-    if (next) {
+    if (next)
       next.addEventListener("click", () => {
         const { maxIndex } = computeLayout();
         index = Math.min(maxIndex, index + 1);
         update();
       });
-    }
-    if (prev)
-      prev.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          prev.click();
-        }
-      });
-    if (next)
-      next.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          next.click();
-        }
-      });
+
     let t = null;
     window.addEventListener("resize", () => {
       clearTimeout(t);

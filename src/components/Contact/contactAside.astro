@@ -3,64 +3,130 @@ import Instagram from "../../icons/instagram.astro";
 import Whatsapp from "../../icons/whatsapp.astro";
 ---
 
-<aside class="bg-white rounded-lg shadow p-6 flex flex-col gap-6">
-  <!-- Datos de contacto -->
+<aside
+  class="rounded-2xl flex flex-col gap-8 p-6"
+  style="background: var(--color-surface); border: 1px solid var(--color-border);"
+>
+  <!-- Contacto directo -->
   <div>
-    <h3 class="text-lg font-semibold mb-3">Contacto directo</h3>
-    <ul class="space-y-3 text-sm">
+    <h3
+      class="text-lg font-semibold mb-4"
+      style="font-family: var(--font-serif); color: var(--color-text-primary);"
+    >
+      Contacto directo
+    </h3>
+    <ul class="space-y-4 text-sm">
       <li class="flex items-center gap-3">
-        <strong class="w-24 text-slate-700">Tel / WhatsApp</strong>
-        <a
-          aria-label="Llamar o enviar WhatsApp"
-          href="tel:+549381470386"
-          class="text-green-900 hover:underline">+54 3814 47-0386</a
+        <span
+          class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style="background: rgba(37,211,102,0.12);"
         >
+          <svg class="w-4 h-4" fill="currentColor" style="color: #25D366;" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </span>
+        <div>
+          <p class="text-xs mb-0.5" style="color: var(--color-text-muted);">Tel / WhatsApp</p>
+          <a
+            href="tel:+549381470386"
+            class="font-medium transition-colors"
+            style="color: var(--color-text-primary);"
+          >
+            +54 3814 47-0386
+          </a>
+        </div>
       </li>
 
       <li class="flex items-center gap-3">
-        <strong class="w-24 text-slate-700">Redes</strong>
-        <div class="flex gap-2">
+        <span
+          class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style="background: rgba(225,48,108,0.12);"
+        >
+          <Instagram class="w-4 h-4" style="color: #E1306C;" />
+        </span>
+        <div>
+          <p class="text-xs mb-0.5" style="color: var(--color-text-muted);">Instagram</p>
           <a
-            aria-label="Instagram"
-            href="https://www.instagram.com/josefinaruizhuidobro?utm_source=ig_web_button_share_sheet&igsh=OTI5Mms0dXNndjd3"
+            href="https://www.instagram.com/josefinaruizhuidobro"
             target="_blank"
-            class="p-2 rounded-full bg-red-50 text-white hover:bg-transparent border border-red-800 transition-colors duration-200"
+            rel="noopener"
+            class="font-medium transition-colors hover:opacity-70"
+            style="color: var(--color-text-primary);"
           >
-            <Instagram class="text-red-800" />
-          </a>
-          <a
-            aria-label="WhatsApp"
-            href="https://wa.me/543814470386/"
-            target="_blank"
-            class="p-2 rounded-full bg-red-50 hover:bg-transparent border border-red-800 transition-colors duration-200"
-          >
-            <Whatsapp class="stroke-red-800" />
+            @josefinaruizhuidobro
           </a>
         </div>
       </li>
     </ul>
+
+    <!-- Redes sociales -->
+    <div class="flex gap-3 mt-5">
+      <a
+        href="https://www.instagram.com/josefinaruizhuidobro"
+        target="_blank"
+        rel="noopener"
+        class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+        style="background: var(--color-surface-2); border: 1px solid var(--color-border);"
+        aria-label="Instagram"
+      >
+        <Instagram class="w-5 h-5" style="color: var(--color-text-secondary);" />
+      </a>
+      <a
+        href="https://wa.me/543814470386/"
+        target="_blank"
+        rel="noopener"
+        class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+        style="background: var(--color-surface-2); border: 1px solid var(--color-border);"
+        aria-label="WhatsApp"
+      >
+        <Whatsapp class="stroke-[--color-text-secondary] w-5 h-5" />
+      </a>
+    </div>
   </div>
 
   <!-- Horarios -->
-  <div>
-    <h4 class="text-md font-semibold">Horarios de atención</h4>
-    <p class="text-sm text-slate-600">Lun - Vie: 9:00 - 15:00</p>
-    <p class="text-sm text-slate-600">Sáb: 9:00 - 18:00</p>
+  <div
+    class="rounded-xl p-4"
+    style="background: var(--color-accent-soft); border: 1px solid rgba(200,169,110,0.2);"
+  >
+    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-accent);">
+      Horarios de atención
+    </h4>
+    <div class="space-y-1.5 text-sm" style="color: var(--color-text-secondary);">
+      <div class="flex justify-between">
+        <span>Lun - Vie</span>
+        <span style="color: var(--color-text-primary);">9:00 - 15:00</span>
+      </div>
+      <div class="flex justify-between">
+        <span>Sábados</span>
+        <span style="color: var(--color-text-primary);">9:00 - 18:00</span>
+      </div>
+      <div class="flex justify-between">
+        <span>Domingos</span>
+        <span style="color: var(--color-text-muted);">Cerrado</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Mapa (Google Maps embed) -->
+  <!-- Mapa -->
   <div>
-    <h4 class="text-md font-semibold mb-2">Zona de entrega</h4>
-    <div class="w-full h-44 rounded overflow-hidden border">
+    <h4 class="text-sm font-semibold mb-3" style="color: var(--color-text-primary);">
+      Zona de entrega
+    </h4>
+    <div class="w-full rounded-xl overflow-hidden" style="height: 180px; border: 1px solid var(--color-border);">
       <iframe
-        title="Mapa de Yerba Buena, Tucumán"
+        title="Mapa de zona de entrega - Yerba Buena, Tucumán"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56973.32393655521!2d-65.29535800000001!3d-26.8134537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9422433a2ee1bffb%3A0xc5d4083eee0d98b1!2sYerba%20Buena%2C%20Tucum%C3%A1n!5e0!3m2!1ses-419!2sar!4v1758581224444!5m2!1ses-419!2sar"
         width="100%"
         height="100%"
-        style="border:0;"
+        style="border:0; filter: grayscale(80%) invert(10%);"
         allowfullscreen=""
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </div>
+    <p class="text-xs mt-2" style="color: var(--color-text-muted);">
+      📍 Yerba Buena y San Miguel de Tucumán
+    </p>
   </div>
 </aside>

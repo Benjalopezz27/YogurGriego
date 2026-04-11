@@ -2,33 +2,49 @@
 import fondo from "../assets/fondo.webp";
 import fondo2 from "../assets/fondo2.webp";
 import fondo3 from "../assets/fondo3.webp";
-import ArrowRight from "../icons/arrowRight.astro";
+
 const slidesProp = Astro.props.slides ?? null;
 const id = `hero-${Math.random().toString(36).slice(2, 9)}`;
+
 const defaultSlides = [
   {
     src: fondo.src,
+    eyebrow: "100% Artesanal · Sin Conservantes",
     title: "Yogur Griego",
-    subtitle:
-      "Hecho en casa, cremoso, natural y alto en proteínas. ¡Probalo hoy por solo $4000!",
-    ctaText: "Comprar ahora",
-    ctaHref: "#contacto",
+    titleAccent: "Artesanal",
+    subtitle: "Cremoso, natural y alto en proteínas. Elaborado con dedicación en Yerba Buena, Tucumán.",
+    ctaText: "Pedir por WhatsApp",
+    ctaHref: "https://wa.me/543814470386?text=Hola!%20Quiero%20pedir%20yogur%20griego",
+    ctaSecondary: "Ver Productos",
+    ctaSecondaryHref: "/productos",
+    isWhatsapp: true,
   },
   {
     src: fondo2.src,
-    title: "Variedades & Sabores",
-    subtitle: "¡Probaló con miel, frutas de estación, granola o frutos secos!",
-    ctaText: "Ver Recetas",
-    ctaHref: "#recetas",
+    eyebrow: "Sabores & Variedades",
+    title: "Miel, Frutos",
+    titleAccent: "& Granola",
+    subtitle: "Descubrí toda nuestra línea de sabores artesanales. Cada pote, una experiencia única.",
+    ctaText: "Ver Productos",
+    ctaHref: "/productos",
+    ctaSecondary: "Ver Recetas",
+    ctaSecondaryHref: "/recetas",
+    isWhatsapp: false,
   },
   {
     src: fondo3.src,
-    title: "Todos los beneficios",
-    subtitle: "Fortalece los huesos. Bajo en calorias y Alto en proteínas.",
-    ctaText: "Beneficios",
-    ctaHref: "#beneficios",
+    eyebrow: "30g de proteína por pote",
+    title: "Nutrición",
+    titleAccent: "Premium",
+    subtitle: "Fortalece tus huesos, mejora tu digestión y mantiene tu energía. La ciencia detrás de cada cucharada.",
+    ctaText: "Ver Beneficios",
+    ctaHref: "/#beneficios",
+    ctaSecondary: "Nuestra Historia",
+    ctaSecondaryHref: "/nuestra-historia",
+    isWhatsapp: false,
   },
 ];
+
 const slides = slidesProp ?? defaultSlides;
 ---
 
@@ -36,107 +52,121 @@ const slides = slidesProp ?? defaultSlides;
   id={id}
   data-carousel-id={id}
   class="relative w-full overflow-hidden"
+  style="height: 100svh; min-height: 560px;"
   aria-roledescription="carousel"
 >
   <!-- Slides wrapper -->
   <div
-    class="flex transition-transform duration-700 ease-in-out"
+    class="flex h-full transition-transform duration-700 ease-in-out"
     data-slides-wrapper
     style={`width: ${slides.length * 100}%; transform: translateX(0%);`}
   >
     {
       slides.map((s: any, i: any) => (
         <div
-          class="relative w-full flex-shrink-0"
+          class="relative flex-shrink-0 h-full"
           style={`width: ${100 / slides.length}%`}
           role="group"
           aria-roledescription="slide"
-          aria-label={`Slide ${i + 1} of ${slides.length}`}
+          aria-label={`Slide ${i + 1} de ${slides.length}`}
           data-slide-index={i}
         >
+          <!-- Background image -->
           <img
             src={s.src}
             alt={s.title}
-            class="w-full h-[60vh] md:h-[80vh] object-cover block"
-            loading="lazy"
+            class="absolute inset-0 w-full h-full object-cover"
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchpriority={i === 0 ? "high" : "auto"}
           />
 
-          <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30 pointer-events-none" />
+          <!-- Multi-layer overlay -->
+          <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(13,13,13,0.85) 0%, rgba(13,13,13,0.4) 50%, rgba(13,13,13,0.2) 100%);"></div>
+          <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(13,13,13,0.9) 0%, transparent 50%);"></div>
 
+          <!-- Content -->
           <div class="absolute inset-0 flex items-center">
-            <div class="max-w-2xl px-6 md:px-12 lg:px-16 text-center md:text-left mx-auto md:mx-0">
-              <h2 class="text-4xl md:text-6xl lg:text-8xl font-extrabold text-gray-700 drop-shadow-md">
-                {s.title}
-              </h2>
-              <p class="mt-4 text-sm md:text-lg text-gray-700/80 max-w-xl">
-                {s.subtitle}
-              </p>
-              <div class="mt-6">
-                <a
-                  aria-label={s.ctaText}
-                  href={s.ctaHref}
-                  class="group inline-flex items-center bg-red-600/50 hover:bg-red-600/80 text-white px-10 py-2 rounded-md font-semibold shadow transition-colors duration-200"
+            <div class="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 w-full">
+              <div class="max-w-2xl">
+                <!-- Eyebrow -->
+                <div class="badge mb-6" style="animation: fadeInUp 0.6s ease both; animation-delay: 0.1s;">
+                  {s.eyebrow}
+                </div>
+
+                <!-- Title -->
+                <h1
+                  class="mb-6"
+                  style={`font-family: var(--font-serif); font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; line-height: 1.0; color: var(--color-text-primary); animation: fadeInUp 0.6s ease both; animation-delay: 0.2s;`}
                 >
-                  {s.ctaText}
-                  <ArrowRight class="inline-block stroke-2 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
-                </a>
+                  {s.title} <span style="color: var(--color-accent); font-style: italic;">{s.titleAccent}</span>
+                </h1>
+
+                <!-- Divider line -->
+                <div class="divider mb-6" style="animation: fadeInUp 0.6s ease both; animation-delay: 0.3s;"></div>
+
+                <!-- Subtitle -->
+                <p
+                  class="mb-10 text-lg"
+                  style="color: var(--color-text-secondary); max-width: 500px; line-height: 1.7; animation: fadeInUp 0.6s ease both; animation-delay: 0.4s;"
+                >
+                  {s.subtitle}
+                </p>
+
+                <!-- CTAs -->
+                <div class="flex flex-wrap gap-4" style="animation: fadeInUp 0.6s ease both; animation-delay: 0.5s;">
+                  {s.isWhatsapp ? (
+                    <a
+                      href={s.ctaHref}
+                      target="_blank"
+                      rel="noopener"
+                      class="btn-whatsapp"
+                      aria-label={s.ctaText}
+                    >
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                      </svg>
+                      {s.ctaText}
+                    </a>
+                  ) : (
+                    <a href={s.ctaHref} class="btn-primary" aria-label={s.ctaText}>
+                      {s.ctaText}
+                    </a>
+                  )}
+
+                  <a href={s.ctaSecondaryHref} class="btn-outline" aria-label={s.ctaSecondary}>
+                    {s.ctaSecondary}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Scroll indicator (only on first slide) -->
+          
         </div>
       ))
     }
   </div>
 
-  <!-- Prev/Next buttons -->
-  <button
-    type="button"
-    data-carousel-prev
-    class="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center hover:bg-white focus:outline-none"
-    aria-label="Anterior slide"
-  >
-    <!-- left chevron -->
-    <svg
-      class="w-5 h-5 text-gray-700"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      ><path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M15 18l-6-6 6-6"></path></svg
-    >
-  </button>
-
-  <button
-    type="button"
-    data-carousel-next
-    class="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 shadow flex items-center justify-center hover:bg-white focus:outline-none"
-    aria-label="Siguiente slide"
-  >
-    <!-- right chevron -->
-    <svg
-      class="w-5 h-5 text-gray-700"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      ><path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M9 18l6-6-6-6"></path></svg
-    >
-  </button>
-
-  <!-- Indicators (dots) -->
-  <div class="absolute left-0 right-0 bottom-6 flex justify-center gap-2 z-30">
-    <div data-carousel-indicators class="flex items-center gap-2"></div>
+  <!-- Indicators -->
+  <div class="absolute left-0 right-0 bottom-16 flex justify-center gap-3 z-30">
+    <div data-carousel-indicators class="flex items-center gap-3"></div>
   </div>
 </div>
 
+<style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+</style>
+
 <script is:inline>
-  window.addEventListener("DOMContentLoaded", () => {
+  function initCarousel() {
     const wrapper = document.querySelector("[data-slides-wrapper]");
     if (!wrapper) return;
 
@@ -144,45 +174,27 @@ const slides = slidesProp ?? defaultSlides;
     const total = wrapper.children.length;
     if (!total) return;
 
-    // elements
-    const prevBtn = root.querySelector("[data-carousel-prev]");
-    const nextBtn = root.querySelector("[data-carousel-next]");
-    const indicatorsContainer = root.querySelector(
-      "[data-carousel-indicators]"
-    );
+    const indicatorsContainer = root.querySelector("[data-carousel-indicators]");
+    if (!indicatorsContainer) return;
+    
+    // Clear previous indicators if re-initializing
+    indicatorsContainer.innerHTML = '';
 
     let current = 0;
-
-    // prefers-reduced-motion
-    const prefersReduced =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // transition
+    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const durationMs = prefersReduced ? 0 : 700;
-    const easing = "cubic-bezier(0.4, 0, 0.2, 1)";
-    wrapper.style.transition =
-      durationMs > 0 ? `transform ${durationMs}ms ${easing}` : "none";
+    wrapper.style.transition = durationMs > 0 ? `transform ${durationMs}ms cubic-bezier(0.4, 0, 0.2, 1)` : "none";
 
-    // autoplay
-    const intervalMs = 3000;
     let timer = null;
-    let isPaused = false;
 
-    // create indicators
     const indicators = [];
     for (let i = 0; i < total; i++) {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className =
-        "w-2.5 h-2.5 rounded-full bg-white/60 hover:bg-white transition-all duration-150";
+      btn.style.cssText = "width: 24px; height: 3px; border-radius: 2px; border: none; cursor: pointer; transition: all 300ms; background: rgba(255,255,255,0.3);";
       btn.setAttribute("aria-label", `Ir al slide ${i + 1}`);
       btn.dataset.index = String(i);
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        goTo(i);
-        restartAutoplay();
-      });
+      btn.addEventListener("click", (e) => { e.preventDefault(); goTo(i); restartAutoplay(); });
       indicatorsContainer.appendChild(btn);
       indicators.push(btn);
     }
@@ -190,11 +202,11 @@ const slides = slidesProp ?? defaultSlides;
     function updateIndicators() {
       indicators.forEach((b, idx) => {
         if (idx === current) {
-          b.classList.remove("bg-white/60");
-          b.classList.add("bg-white");
+          b.style.background = "var(--color-accent)";
+          b.style.width = "40px";
         } else {
-          b.classList.remove("bg-white");
-          b.classList.add("bg-white/60");
+          b.style.background = "rgba(255,255,255,0.3)";
+          b.style.width = "24px";
         }
       });
     }
@@ -205,97 +217,29 @@ const slides = slidesProp ?? defaultSlides;
       updateIndicators();
     }
 
-    function goTo(index) {
-      current = ((index % total) + total) % total;
-      update();
-    }
-
-    function next() {
-      goTo(current + 1);
-    }
-    function prev() {
-      goTo(current - 1);
-    }
+    function goTo(index) { current = ((index % total) + total) % total; update(); }
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
 
     function start() {
       if (prefersReduced) return;
       stop();
-      timer = setInterval(() => {
-        if (!isPaused) next();
-      }, intervalMs);
+      timer = setInterval(() => { next(); }, 5000);
     }
-    function stop() {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
-      }
-    }
-    function restartAutoplay() {
-      stop();
-      start();
-    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restartAutoplay() { stop(); start(); }
 
-    // button listeners
-    if (nextBtn) {
-      nextBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        next();
-        restartAutoplay();
-      });
-    }
-    if (prevBtn) {
-      prevBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        prev();
-        restartAutoplay();
-      });
-    }
-
-    // pause on hover/focus (if not reduced-motion)
-    if (!prefersReduced) {
-      root.addEventListener("mouseenter", () => {
-        isPaused = true;
-      });
-      root.addEventListener("mouseleave", () => {
-        isPaused = false;
-      });
-      root.addEventListener("focusin", () => {
-        isPaused = true;
-      });
-      root.addEventListener("focusout", () => {
-        isPaused = false;
-      });
-    }
-
-    // keyboard navigation
     root.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") {
-        prev();
-        restartAutoplay();
-      }
-      if (e.key === "ArrowRight") {
-        next();
-        restartAutoplay();
-      }
+      if (e.key === "ArrowLeft") { prev(); restartAutoplay(); }
+      if (e.key === "ArrowRight") { next(); restartAutoplay(); }
     });
 
-    // visibility change
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stop();
-      else start();
-    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else start(); });
 
-    // init
     update();
     start();
+  }
 
-    // cleanup observer
-    const obs = new MutationObserver(() => {
-      if (!document.body.contains(wrapper)) {
-        stop();
-        obs.disconnect();
-      }
-    });
-    obs.observe(document.body, { childList: true, subtree: true });
-  });
+  // Support for View Transitions
+  document.addEventListener("astro:page-load", initCarousel);
 </script>

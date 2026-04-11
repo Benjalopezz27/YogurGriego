@@ -1,7 +1,11 @@
 ---
-const { class: className, id } = Astro.props;
+interface Props {
+  id?: string;
+  class?: string;
+}
+const { id, class: className } = Astro.props;
 ---
 
-<section id={id} class={` w-full lg:w-[1024px] mx-auto ${className}`}>
+<div id={id} class={`w-full max-w-[1400px] mx-auto ${className ?? ""}`}>
   <slot />
-</section>
+</div>

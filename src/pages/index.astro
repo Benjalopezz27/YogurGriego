@@ -1,47 +1,43 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import FondoContacto from "../assets/FondoContacto.webp";
-import "../global.css";
-import SectionContainer from "../components/SectionContainer.astro";
 import Carousel from "../components/Carousel.astro";
-import Contact from "../components/Contact/Contact.astro";
 import Header from "../components/Header/header.astro";
 import Beneficios from "../components/Benefits/beneficios.astro";
 import Recipes from "../components/Recipes/Recipes.astro";
-import FondoRecetas from "../assets/FondoRecetas.webp";
-import FondoBeneficios from "../assets/FondoBeneficios.webp";
+import Contact from "../components/Contact/Contact.astro";
+import SectionContainer from "../components/SectionContainer.astro";
 ---
 
-<Layout>
+<Layout
+  title="Yogur Griego Artesanal | Tucumán — Natural, Cremoso, Sin Conservantes"
+  description="Yogur griego 100% artesanal elaborado en Yerba Buena, Tucumán. Cremoso, sin conservantes, 30g de proteína. Pedí por WhatsApp con envío a domicilio."
+>
   <main>
+    <!-- Hero -->
     <section id="inicio" class="w-full">
       <Header />
-      <Carousel class="w-full" />
+      <Carousel />
     </section>
 
-    <div
-      class="bg-cover bg-center bg-no-repeat"
-      style={`background-image: url(${FondoBeneficios.src});`}
-    >
+    <!-- Benefits -->
+    <section id="beneficios-section">
       <SectionContainer>
         <Beneficios />
       </SectionContainer>
-    </div>
-    <div
-      class="bg-cover bg-center bg-no-repeat"
-      style={`background-image: url(${FondoRecetas.src});`}
-    >
+    </section>
+
+    <!-- Recipes -->
+    <section id="recetas-section" style="background: var(--color-bg-secondary);">
       <SectionContainer>
         <Recipes />
       </SectionContainer>
-    </div>
-    <div
-      class="bg-cover bg-center bg-no-repeat"
-      style={`background-image: url(${FondoContacto.src});`}
-    >
-      <SectionContainer id="contacto" class="pt-10">
+    </section>
+
+    <!-- Contact / Pedidos -->
+    <section id="contacto">
+      <SectionContainer>
         <Contact />
       </SectionContainer>
-    </div>
+    </section>
   </main>
 </Layout>

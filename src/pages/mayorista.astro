@@ -1,0 +1,266 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header/header.astro";
+import { 
+  Building2, 
+  Utensils, 
+  Coffee, 
+  Hotel, 
+  Store, 
+  Package, 
+  CheckCircle2, 
+  ChefHat, 
+  Send,
+  CalendarCheck,
+  Award
+} from "lucide-astro";
+---
+
+<Layout
+  title="Mayoristas | Yogur Griego Artesanal para Restaurantes y Comercios"
+  description="Proveemos yogur griego artesanal a granel para restaurantes, cafeterías, hoteles y comercios de Tucumán. Consultá nuestros precios mayoristas y formatos de entrega."
+>
+  <Header />
+
+  <main class="pt-28 pb-20 px-6 min-h-screen">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Header -->
+      <header class="text-center mb-16">
+        <div class="badge mb-5 inline-flex items-center gap-2">
+          <Building2 class="w-3 h-3" />
+          Canal Profesional
+        </div>
+        <h1 class="section-heading mb-4">
+          Yogur Griego para <span>tu Negocio</span>
+        </h1>
+        <div class="divider mx-auto"></div>
+        <p class="mt-6 max-w-2xl mx-auto text-lg" style="color: var(--color-text-secondary);">
+          Calidad premium y formatos a granel diseñados para el sector gastronómico de Tucumán.
+        </p>
+      </header>
+
+      <!-- Who is this for -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+        {[
+          { icon: Utensils, label: "Restaurantes" },
+          { icon: Coffee, label: "Cafeterías" },
+          { icon: Hotel, label: "Hoteles" },
+          { icon: Store, label: "Comercios" },
+        ].map(item => (
+          <div
+            class="rounded-3xl p-8 text-center flex flex-col items-center gap-4 transition-all hover:translate-y-[-4px] hover:bg-white/[0.02]"
+            style="background: var(--color-surface); border: 1px solid var(--color-border);"
+          >
+            <div class="p-4 rounded-2xl bg-[--color-accent-soft] text-[--color-accent]">
+               <item.icon class="w-8 h-8" />
+            </div>
+            <p class="text-sm font-semibold uppercase tracking-wider" style="color: var(--color-text-primary);">{item.label}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Formats table -->
+      <div class="mb-20">
+        <h2
+          class="text-3xl font-semibold mb-8"
+          style="font-family: var(--font-serif); color: var(--color-text-primary);"
+        >
+          Formatos B2B
+        </h2>
+        <div class="overflow-hidden rounded-3xl" style="border: 1px solid var(--color-border); background: var(--color-surface);">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr style="background: var(--color-surface-2); border-bottom: 1px solid var(--color-border);">
+                  <th class="text-left p-6 font-semibold" style="color: var(--color-text-primary);">Formato</th>
+                  <th class="text-left p-6 font-semibold" style="color: var(--color-text-primary);">Contenido</th>
+                  <th class="text-left p-6 font-semibold" style="color: var(--color-text-primary);">Vida útil</th>
+                  <th class="text-left p-6 font-semibold" style="color: var(--color-text-primary);">Ideal para</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                {[
+                  { formato: "Pote individual", contenido: "400g", vida: "7 días", ideal: "Retail / reventa" },
+                  { formato: "Pack x6", contenido: "2.4kg", vida: "7 días", ideal: "Pequeños negocios" },
+                  { formato: "Balde Pro 3L", contenido: "3 litros", vida: "10 días", ideal: "Cafeterías / desayunos" },
+                  { formato: "Balde Pro 5L", contenido: "5 litros", vida: "10 días", ideal: "Restaurantes / cocina" },
+                ].map((row) => (
+                  <tr class="hover:bg-white/[0.01] transition-colors">
+                    <td class="p-6 font-medium" style="color: var(--color-accent);">{row.formato}</td>
+                    <td class="p-6" style="color: var(--color-text-primary);">{row.contenido}</td>
+                    <td class="p-6" style="color: var(--color-text-secondary);">{row.vida}</td>
+                    <td class="p-6" style="color: var(--color-text-secondary);">{row.ideal}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest mt-4 flex items-center gap-2" style="color: var(--color-text-muted);">
+          <Package class="w-3 h-3" />
+          Precios mayoristas según volumen · Logística propia en Tucumán
+        </p>
+      </div>
+
+      <!-- Advantages -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        {[
+          { title: "Suministro Programado", desc: "Entregas fijas para que tu cocina nunca se detenga.", icon: CalendarCheck },
+          { title: "Calidad Certificada", desc: "Trazabilidad completa y fechas de elaboración recientes.", icon: Award },
+          { title: "Branded Experience", desc: "Material POP y asesoramiento para destacar en tu menú.", icon: ChefHat },
+        ].map(item => (
+          <div
+            class="rounded-3xl p-8 flex flex-col gap-4"
+            style="background: var(--color-surface); border: 1px solid var(--color-border);"
+          >
+            <item.icon class="w-8 h-8" style="color: var(--color-accent);" />
+            <div>
+              <h3 class="font-semibold text-lg mb-2" style="color: var(--color-text-primary);">{item.title}</h3>
+              <p class="text-sm leading-relaxed" style="color: var(--color-text-secondary);">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- B2B Lead form -->
+      <div
+        class="rounded-[2.5rem] p-8 md:p-12"
+        style="background: var(--color-surface); border: 1px solid var(--color-border); box-shadow: var(--shadow-lg);"
+      >
+        <div class="max-w-3xl mx-auto">
+          <header class="text-center mb-12">
+            <h2
+              class="text-3xl font-semibold mb-4"
+              style="font-family: var(--font-serif); color: var(--color-text-primary);"
+            >
+              Consultá Precios Mayoristas
+            </h2>
+            <p class="text-base" style="color: var(--color-text-secondary);">
+              Nuestro equipo comercial te responderá con una propuesta personalizada en el día.
+            </p>
+          </header>
+  
+          <form id="b2bForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+                Nombre del negocio
+              </label>
+              <input
+                type="text"
+                id="negocio"
+                name="negocio"
+                required
+                placeholder="Ej: Cafetería Central"
+                class="form-input"
+              />
+            </div>
+  
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+                Persona de Contacto
+              </label>
+              <input
+                type="text"
+                id="contacto"
+                name="contacto"
+                required
+                placeholder="Tu nombre completo"
+                class="form-input"
+              />
+            </div>
+  
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+                Tipo de Negocio
+              </label>
+              <select id="tipo" name="tipo" required class="form-input">
+                <option value="">Seleccioná...</option>
+                <option value="restaurante">Restaurante</option>
+                <option value="cafeteria">Cafetería</option>
+                <option value="hotel">Hotel</option>
+                <option value="comercio">Tienda / Saludable</option>
+                <option value="otro">Distribución / Otros</option>
+              </select>
+            </div>
+  
+            <div class="flex flex-col gap-2">
+              <label class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+                Consumo Semanal
+              </label>
+              <select id="volumen" name="volumen" required class="form-input">
+                <option value="">Seleccioná...</option>
+                <option value="1-5kg">1 - 5 kg</option>
+                <option value="5-15kg">5 - 15 kg</option>
+                <option value="15-30kg">15 - 30 kg</option>
+                <option value="30+kg">+30 kg / Pallet</option>
+              </select>
+            </div>
+  
+            <div class="md:col-span-2 flex flex-col gap-2">
+              <label class="text-xs font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+                Tu mensaje
+              </label>
+              <textarea
+                id="mensajeb2b"
+                name="mensajeb2b"
+                placeholder="Contanos qué productos te interesan y cómo podemos ayudarte..."
+                rows="4"
+                class="form-input resize-none"
+              ></textarea>
+            </div>
+  
+            <div class="md:col-span-2 mt-4">
+              <button type="submit" class="btn-primary w-full justify-center py-5 text-base gap-3 group">
+                Enviar solicitud profesional
+                <Send class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    color: var(--color-text-primary);
+    font-size: 0.875rem;
+    outline: none;
+    transition: all 300ms;
+  }
+  .form-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px rgba(200, 169, 110, 0.1);
+    background: var(--color-surface);
+  }
+  .form-input::placeholder { color: var(--color-text-muted); }
+  select.form-input option { background: var(--color-surface-2); color: var(--color-text-primary); }
+</style>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    const form = document.getElementById("b2bForm");
+    if (form) {
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const negocio = document.getElementById("negocio").value;
+        const contacto = document.getElementById("contacto").value;
+        const tipo = document.getElementById("tipo").value;
+        const volumen = document.getElementById("volumen").value;
+        const mensaje = document.getElementById("mensajeb2b").value;
+
+        const texto = encodeURIComponent(
+          `*CONSULTA MAYORISTA*\n\nNegocio: *${negocio}*\nRubro: ${tipo}\nContacto: ${contacto}\nConsumo: ${volumen}\n\n_Mensaje:_\n${mensaje}`
+        );
+        window.open(`https://wa.me/543814470386?text=${texto}`, "_blank");
+      });
+    }
+  });
+</script>

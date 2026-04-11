@@ -1,53 +1,157 @@
 ---
-import LinkedIn from "../icons/Linkedin.astro";
-import Github from "../icons/Github.astro";
-import Mail from "../icons/Mail.astro";
-import Instagram from "../icons/instagram.astro";
+import { Instagram, Linkedin, Github, Phone, MapPin, Clock, ExternalLink } from "lucide-astro";
 ---
 
 <footer
-  class="py-6 bg-gray-500 flex justify-around sm:flex-row flex-col items-center gap-6"
+  class="py-12 px-6"
+  style="background: var(--color-bg-secondary); border-top: 1px solid var(--color-border);"
 >
-  <p class="px-2 py-1.5 text-white">
-    © {new Date().getFullYear()} Benjamin Lopez Zigaran. Todos los derechos reservados.
-  </p>
-  <div class="flex gap-6 px-2">
-    <a
-      arial-label="LinkedIn de Benjamin Lopez Zigaran"
-      href="https://www.linkedin.com/in/benjamin-lopez-zigaran/"
-      target="_blank"
-      rel="noopener"
-      class="hover:scale-110 transition-transform duration-200 rounded-full py-1.5"
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+      <!-- Brand -->
+      <div class="flex flex-col gap-4">
+        <h3
+          class="text-xl font-semibold"
+          style="font-family: var(--font-serif); color: var(--color-text-primary);"
+        >
+          Yogur Griego Artesanal
+        </h3>
+        <p class="text-sm leading-relaxed" style="color: var(--color-text-secondary);">
+          Elaborado con dedicación en Yerba Buena, Tucumán. Sin conservantes,
+          sin colorantes. Solo leche, fermento y amor artesanal.
+        </p>
+        <div class="flex gap-3">
+          <a
+            href="https://www.instagram.com/josefinaruizhuidobro"
+            target="_blank"
+            rel="noopener"
+            class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+            style="background: var(--color-surface); border: 1px solid var(--color-border);"
+            aria-label="Instagram del negocio"
+          >
+            <Instagram
+              class="w-5 h-5 transition-colors group-hover:text-[var(--color-accent)]"
+              style="color: var(--color-text-secondary);"
+            />
+          </a>
+          <a
+            href="https://wa.me/543814470386"
+            target="_blank"
+            rel="noopener"
+            class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 group"
+            style="background: var(--color-surface); border: 1px solid var(--color-border);"
+            aria-label="WhatsApp"
+          >
+            <Phone
+              class="w-5 h-5 transition-colors group-hover:text-[var(--color-accent)]"
+              style="color: var(--color-text-secondary);"
+            />
+          </a>
+        </div>
+      </div>
+
+      <!-- Navegación rápida -->
+      <div>
+        <h4
+          class="text-xs font-semibold uppercase tracking-widest mb-6 flex items-center gap-2"
+          style="color: var(--color-text-muted);"
+        >
+          <div class="w-4 h-[1px] bg-[--color-accent]"></div>
+          Navegación
+        </h4>
+        <ul class="space-y-3.5 text-sm">
+          {[
+            { href: "/", label: "Inicio" },
+            { href: "/productos", label: "Productos" },
+            { href: "/recetas", label: "Recetas" },
+            { href: "/nuestra-historia", label: "Nuestra Historia" },
+            { href: "/donde-comprar", label: "Dónde Comprar" },
+            { href: "/mayorista", label: "Mayoristas" },
+          ].map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="transition-colors duration-200 hover:text-[var(--color-accent)] flex items-center gap-2"
+                style="color: var(--color-text-secondary);"
+              >
+                <div class="w-1 h-1 rounded-full bg-[--color-text-muted]"></div>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contacto rápido -->
+      <div>
+        <h4
+          class="text-xs font-semibold uppercase tracking-widest mb-6 flex items-center gap-2"
+          style="color: var(--color-text-muted);"
+        >
+          <div class="w-4 h-[1px] bg-[--color-accent]"></div>
+          Contacto
+        </h4>
+        <ul
+          class="space-y-4 text-sm"
+          style="color: var(--color-text-secondary);"
+        >
+          <li class="flex items-start gap-3">
+            <Phone class="w-4 h-4 mt-0.5" style="color: var(--color-accent);" />
+            <a href="tel:+549381470386" class="hover:text-[var(--color-accent)] transition-colors">
+              +54 3814 47-0386
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <MapPin class="w-4 h-4 mt-0.5" style="color: var(--color-accent);" />
+            <span>Yerba Buena, Tucumán</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <Clock class="w-4 h-4 mt-0.5" style="color: var(--color-accent);" />
+            <div class="flex flex-col gap-1">
+              <span>Lun-Vie: 9:00 - 15:00</span>
+              <span>Sáb: 9:00 - 18:00</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div
+      class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-6"
+      style="border-top: 1px solid var(--color-border);"
     >
-      <LinkedIn class="mb-1 size-7 hover:text-red-200 text-white" />
-    </a>
-    <a
-      arial-label="GitHub de Benjamin Lopez Zigaran"
-      href="https://github.com/Benjalopezz27"
-      target="_blank"
-      rel="noopener"
-      class="hover:scale-110 transition-transform duration-200 rounded-full py-1.5"
-    >
-      <Github class="mb-1 size-7 hover:text-red-200 text-white" />
-    </a>
-    <a
-      arial-label="Instagram de Benjamin Lopez Zigaran"
-      href="https://www.instagram.com/benjalopezzigaran/"
-      target="_blank"
-      rel="noopener"
-      class="hover:scale-110 transition-transform duration-200 rounded-full py-1.5"
-    >
-      <Instagram class="mb-1 size-7 hover:text-red-200 text-white" />
-    </a>
-    <a
-      arial-label="Enviar email a Benjamin Lopez Zigaran"
-      href="mailto:benjaminlopezzigaran01@gmail.com"
-      target="_blank"
-      rel="noopener"
-      class="hover:scale-105 transition-transform duration-200 rounded-full flex gap-1.5 bg-yellow-100/10 px-3 pt-1.5 pb-1 items-center text-white"
-    >
-      <Mail class="size-7 text-white" />
-      <p class="font-semibold text-white">Contactame</p>
-    </a>
+      <p class="text-xs text-center sm:text-left" style="color: var(--color-text-muted);">
+        © {new Date().getFullYear()} Yogur Griego Artesanal · Tucumán, Argentina
+      </p>
+
+      <!-- Developer credits -->
+      <div class="flex items-center gap-4">
+        <div class="flex flex-col items-end gap-1">
+          <p class="text-[10px] uppercase tracking-wider" style="color: var(--color-text-muted);">Crafted by</p>
+          <p class="text-xs font-medium" style="color: var(--color-text-primary);">Benjamín Lopez Zigaran</p>
+        </div>
+        <div class="flex gap-2">
+          <a
+            href="https://www.linkedin.com/in/benjamin-lopez-zigaran/"
+            target="_blank"
+            rel="noopener"
+            class="w-8 h-8 rounded-lg flex items-center justify-center transition-all bg-white/5 border border-white/5 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+            aria-label="LinkedIn"
+          >
+            <Linkedin class="w-4 h-4" />
+          </a>
+          <a
+            href="https://github.com/Benjalopezz27"
+            target="_blank"
+            rel="noopener"
+            class="w-8 h-8 rounded-lg flex items-center justify-center transition-all bg-white/5 border border-white/5 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+            aria-label="GitHub"
+          >
+            <Github class="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>

@@ -1,0 +1,116 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header/header.astro";
+import RecipesCard from "../../components/Recipes/RecipesCard.astro";
+import { getCollection } from "astro:content";
+
+const recetas = await getCollection("recetas");
+
+const categorias = [...new Set(recetas.map(r => r.data.categoria))];
+---
+
+<Layout
+  title="Recetas con Yogur Griego | Inspiración Culinaria"
+  description="Explorá recetas saludables hechas con yogur griego artesanal. Desayunos, postres, bebidas y más. Inspiración culinaria de Tucumán."
+>
+  <Header />
+
+  <main class="pt-28 pb-20 px-6 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Header -->
+      <header class="text-center mb-16">
+        <div class="badge mb-5 inline-flex">Inspiración Culinaria</div>
+        <h1 class="section-heading mb-4">
+          Recetas con <span>Yogur Griego</span>
+        </h1>
+        <div class="divider mx-auto"></div>
+        <p class="mt-6 max-w-2xl mx-auto text-lg" style="color: var(--color-text-secondary);">
+          De desayunos energéticos a postres gourmet. El yogur griego artesanal como protagonista de cada preparación.
+        </p>
+      </header>
+
+      <!-- Category filters -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12" id="category-filters">
+        <button
+          data-filter="all"
+          class="filter-btn active px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+          style="background: var(--color-accent); color: #0D0D0D;"
+        >
+          Todas
+        </button>
+        {categorias.map(cat => (
+          <button
+            data-filter={cat}
+            class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+            style="background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-secondary);"
+          >
+            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      <!-- Recipes grid -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="recipes-grid">
+        {recetas.map(receta => (
+          <div data-categoria={receta.data.categoria} class="recipe-item">
+            <RecipesCard
+              title={receta.data.titulo}
+              description={receta.data.descripcion}
+              imageUrl={receta.data.imagenPrincipal}
+              link={receta.data.link}
+              categoria={receta.data.categoria}
+              tiempoPreparacion={receta.data.tiempoPreparacion}
+              dificultad={receta.data.dificultad}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .filter-btn:hover:not(.active) {
+    border-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+  }
+  .recipe-item {
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+  .recipe-item.hidden {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const items = document.querySelectorAll(".recipe-item");
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+
+      // Update active button styles
+      filterBtns.forEach(b => {
+        b.style.background = "var(--color-surface)";
+        b.style.color = "var(--color-text-secondary)";
+        b.style.border = "1px solid var(--color-border)";
+        b.classList.remove("active");
+      });
+      btn.style.background = "var(--color-accent)";
+      btn.style.color = "#0D0D0D";
+      btn.style.border = "none";
+      btn.classList.add("active");
+
+      // Filter items
+      items.forEach(item => {
+        if (filter === "all" || item.dataset.categoria === filter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
+  });
+</script>
