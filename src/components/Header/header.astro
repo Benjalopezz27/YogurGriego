@@ -1,7 +1,6 @@
 ---
 import Logo from "./logo.astro";
 import Nav from "./nav.astro";
-import { MessageCircle } from "lucide-astro";
 ---
 
 <div
@@ -23,19 +22,6 @@ import { MessageCircle } from "lucide-astro";
       <Nav />
     </nav>
 
-    <!-- Desktop CTA -->
-    <a
-      href="https://wa.me/543814470386?text=Hola!%20Me%20interesa%20pedir%20yogur%20griego"
-      target="_blank"
-      rel="noopener"
-      class="hidden xl:inline-flex items-center gap-2 btn-primary py-2.5 px-5 text-xs group"
-      aria-label="Pedir por WhatsApp"
-    >
-      <MessageCircle
-        class="w-4 h-4 transition-transform group-hover:scale-110"
-      />
-      Pedir Ahora
-    </a>
 
     <!-- Hamburger -->
     <button
@@ -66,14 +52,6 @@ import { MessageCircle } from "lucide-astro";
     style="background: rgba(13,13,13,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);"
   >
     <Nav mobile />
-    <a
-      href="https://wa.me/543814470386?text=Hola!%20Me%20interesa%20pedir%20yogur%20griego"
-      target="_blank"
-      rel="noopener"
-      class="btn-whatsapp mt-2"
-    >
-      Pedir por WhatsApp
-    </a>
   </div>
 </header>
 

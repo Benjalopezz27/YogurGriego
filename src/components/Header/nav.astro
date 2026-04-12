@@ -1,4 +1,6 @@
 ---
+import { MessageCircle } from "lucide-astro";
+
 interface Props {
   mobile?: boolean;
 }
@@ -6,31 +8,62 @@ const { mobile = false } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 const links = [
-  { href: "/",              label: "Inicio" },
-  { href: "/productos",     label: "Productos" },
-  { href: "/recetas",       label: "Recetas" },
+  { href: "/", label: "Inicio" },
+  { href: "/productos", label: "Productos" },
+  { href: "/recetas", label: "Recetas" },
   { href: "/nuestra-historia", label: "Nosotros" },
   { href: "/donde-comprar", label: "Dónde Comprar" },
-  { href: "/mayorista",     label: "Mayoristas" },
+  { href: "/mayorista", label: "Mayoristas" },
 ];
 ---
 
-{links.map(link => {
-  // Normalize paths for comparison (handle trailing slashes)
-  const normalizedPath = currentPath.endsWith("/") && currentPath !== "/" ? currentPath.slice(0, -1) : currentPath;
-  const normalizedLink = link.href.endsWith("/") && link.href !== "/" ? link.href.slice(0, -1) : link.href;
-  
-  const isActive = normalizedPath === normalizedLink || 
-                  (normalizedLink !== "/" && normalizedPath.startsWith(normalizedLink));
+<div
+  class={`flex ${mobile ? "flex-col items-center gap-4" : "items-center gap-8"}`}
+>
+  {
+    links.map((link) => {
+      // Normalize paths for comparison (handle trailing slashes)
+      const normalizedPath =
+        currentPath.endsWith("/") && currentPath !== "/"
+          ? currentPath.slice(0, -1)
+          : currentPath;
+      const normalizedLink =
+        link.href.endsWith("/") && link.href !== "/"
+          ? link.href.slice(0, -1)
+          : link.href;
 
-  return (
-    <a
-      href={link.href}
-      aria-label={`Ir a ${link.label}`}
-      aria-current={isActive ? "page" : undefined}
-      class={`nav-link ${isActive ? "active" : ""} ${mobile ? "text-base py-1" : ""}`}
-    >
-      {link.label}
-    </a>
-  );
-})}
+      const isActive =
+        normalizedPath === normalizedLink ||
+        (normalizedLink !== "/" && normalizedPath.startsWith(normalizedLink));
+
+      return (
+        <a
+          href={link.href}
+          aria-label={`Ir a ${link.label}`}
+          aria-current={isActive ? "page" : undefined}
+          class={`nav-link ${isActive ? "active" : ""} ${mobile ? "text-lg py-2" : ""}`}
+        >
+          {link.label}
+        </a>
+      );
+    })
+  }
+
+  <a
+    href="https://wa.me/543814470386?text=Hola!%20Me%20interesa%20pedir%20yogur%20griego"
+    target="_blank"
+    rel="noopener"
+    class={`btn-primary flex items-center justify-center gap-2 group transition-all duration-300
+      ${
+        mobile
+          ? "mt-4 py-3 px-8 text-sm w-full"
+          : "hidden xl:inline-flex py-2.5 px-5 text-xs ml-4"
+      }`}
+    aria-label="Pedir por WhatsApp"
+  >
+    <MessageCircle
+      class={`${mobile ? "w-5 h-5" : "w-4 h-4"} transition-transform group-hover:scale-110`}
+    />
+    Pedir Ahora
+  </a>
+</div>
